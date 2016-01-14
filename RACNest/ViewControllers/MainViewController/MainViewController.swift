@@ -17,9 +17,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.registerReusableCell(MainViewTableCell)
+
         tableView.dataSource = mainViewModel
         tableView.delegate = self
-        tableView.registerReusableCell(MainViewTableCell)
     }
 }
 
