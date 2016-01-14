@@ -37,11 +37,4 @@ extension MainViewModel: UITableViewDataSource {
     }
 }
 
-extension MainViewModel: UITableViewDelegate {
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        
-    }
-}
 
