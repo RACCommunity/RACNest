@@ -14,8 +14,6 @@ class FormViewController: UIViewController {
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
 
-    private let mainViewModel = MainViewModel()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
