@@ -40,10 +40,10 @@
             </objects>
             <point key="canvasLocation" x="1076" y="1247"/>
         </scene>
-        <!--View Controller-->
+        <!--Form View Controller-->
         <scene sceneID="bUZ-EK-uL7">
             <objects>
-                <viewController id="Vb3-p1-I7r" sceneMemberID="viewController">
+                <viewController id="Vb3-p1-I7r" customClass="FormViewController" customModule="RACNest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="etn-U8-thV"/>
                         <viewControllerLayoutGuide type="bottom" id="cUe-xc-AQc"/>
@@ -51,8 +51,45 @@
                     <view key="view" contentMode="scaleToFill" id="hdV-Rk-Pff">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QZT-GM-91m">
+                                <rect key="frame" x="202" y="104" width="196" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="7gS-VO-vxK"/>
+                                    <constraint firstAttribute="width" constant="196" id="pyM-nq-xk1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="miP-Ge-bA9">
+                                <rect key="frame" x="202" y="164" width="196" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="196" id="UnU-yU-IeC"/>
+                                    <constraint firstAttribute="height" constant="30" id="b9k-RB-9x1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nqm-d9-4F6">
+                                <rect key="frame" x="281" y="224" width="38" height="30"/>
+                                <state key="normal" title="Login"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Nqm-d9-4F6" firstAttribute="top" secondItem="miP-Ge-bA9" secondAttribute="bottom" constant="30" id="5Pd-bY-em3"/>
+                            <constraint firstItem="QZT-GM-91m" firstAttribute="centerX" secondItem="hdV-Rk-Pff" secondAttribute="centerX" id="KgA-6z-pvL"/>
+                            <constraint firstItem="QZT-GM-91m" firstAttribute="top" secondItem="etn-U8-thV" secondAttribute="bottom" constant="40" id="gk2-Tg-7cw"/>
+                            <constraint firstItem="miP-Ge-bA9" firstAttribute="centerX" secondItem="hdV-Rk-Pff" secondAttribute="centerX" id="rLc-OQ-kuv"/>
+                            <constraint firstItem="Nqm-d9-4F6" firstAttribute="centerX" secondItem="hdV-Rk-Pff" secondAttribute="centerX" id="sy7-iP-PJ2"/>
+                            <constraint firstItem="miP-Ge-bA9" firstAttribute="top" secondItem="QZT-GM-91m" secondAttribute="bottom" constant="30" id="yYm-0K-UzK"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="Nqm-d9-4F6" id="JTa-y0-jOR"/>
+                        <outlet property="passwordField" destination="miP-Ge-bA9" id="MIO-lJ-37W"/>
+                        <outlet property="usernameField" destination="QZT-GM-91m" id="uk4-Im-lrI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nkY-gN-Lva" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
