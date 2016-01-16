@@ -28,8 +28,10 @@ extension MainViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
         let item = mainViewModel.items[indexPath.row]
-        self.performSegueWithIdentifier(item.identifier, sender: nil)
+        self.performSegue(item.identifier)
     }
 }
 

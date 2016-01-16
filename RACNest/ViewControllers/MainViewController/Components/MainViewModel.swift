@@ -14,7 +14,7 @@ class MainViewModel: NSObject {
     
     override init() {
         
-        let item1 = MainViewTableCellItem(title: "Test", identifier: "")
+        let item1 = MainViewTableCellItem(title: "Form 🐥", identifier: .Form)
         items = [item1]
 
         super.init()
@@ -28,7 +28,7 @@ extension MainViewModel: UITableViewDataSource {
         let cell: MainViewTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
 
         cell.configure(items[indexPath.row])
-        
+
         return cell
     }
     

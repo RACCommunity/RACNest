@@ -19,5 +19,5 @@ protocol TextPresentable {
 
 protocol ViewControllerStoryboardIdentifier {
     
-    var identifier: String { get }
+    var identifier: StoryboardSegue { get }
 }

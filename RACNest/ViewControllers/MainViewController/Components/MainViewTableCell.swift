@@ -18,7 +18,6 @@ class MainViewTableCell: UITableViewCell {
         super.init(style: .Default, reuseIdentifier: reuseIdentifier)
 
         contentView.addSubview(cellDescriptionLabel)
-        accessoryType = .DisclosureIndicator
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -29,6 +28,7 @@ class MainViewTableCell: UITableViewCell {
         
         cellDescriptionLabel.text = presentable.text
         cellDescriptionLabel.textColor = presentable.textColor
+        accessoryType = .DisclosureIndicator
     }
     
     override func layoutSubviews() {

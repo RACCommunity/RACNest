@@ -18,6 +18,8 @@
 		C72D33091C4716B100F88B11 /* MainViewTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72D33081C4716B100F88B11 /* MainViewTableCell.swift */; };
 		C72D330D1C471B0C00F88B11 /* CellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72D330C1C471B0C00F88B11 /* CellProtocols.swift */; };
 		C72D330F1C471B3000F88B11 /* TableViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72D330E1C471B3000F88B11 /* TableViewProtocols.swift */; };
+		C7852C331C4ACAAA00375089 /* StoryboardSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C321C4ACAAA00375089 /* StoryboardSegue.swift */; };
+		C7852C351C4ACB6B00375089 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C341C4ACB6B00375089 /* Storyboard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,8 @@
 		C72D33081C4716B100F88B11 /* MainViewTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewTableCell.swift; sourceTree = "<group>"; };
 		C72D330C1C471B0C00F88B11 /* CellProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellProtocols.swift; sourceTree = "<group>"; };
 		C72D330E1C471B3000F88B11 /* TableViewProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewProtocols.swift; sourceTree = "<group>"; };
+		C7852C321C4ACAAA00375089 /* StoryboardSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardSegue.swift; sourceTree = "<group>"; };
+		C7852C341C4ACB6B00375089 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				C72D32EC1C470FE000F88B11 /* AppDelegate */,
+				C7852C311C4ACA9F00375089 /* AppRelated */,
 				C72D32F61C470FE000F88B11 /* ViewControllers */,
 				C72D330A1C471ADB00F88B11 /* Components */,
 				C72D32EE1C470FE000F88B11 /* Resources */,
@@ -171,8 +176,17 @@
 			children = (
 				C72D330C1C471B0C00F88B11 /* CellProtocols.swift */,
 				C72D330E1C471B3000F88B11 /* TableViewProtocols.swift */,
+				C7852C341C4ACB6B00375089 /* Storyboard.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		C7852C311C4ACA9F00375089 /* AppRelated */ = {
+			isa = PBXGroup;
+			children = (
+				C7852C321C4ACAAA00375089 /* StoryboardSegue.swift */,
+			);
+			path = AppRelated;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,10 +292,12 @@
 			files = (
 				C72D32F81C470FE000F88B11 /* AppDelegate.swift in Sources */,
 				C72D33001C47110A00F88B11 /* MainViewController.swift in Sources */,
+				C7852C331C4ACAAA00375089 /* StoryboardSegue.swift in Sources */,
 				C72D330F1C471B3000F88B11 /* TableViewProtocols.swift in Sources */,
 				C72D33071C47139300F88B11 /* MainViewTableCellItem.swift in Sources */,
 				C72D33091C4716B100F88B11 /* MainViewTableCell.swift in Sources */,
 				C72D330D1C471B0C00F88B11 /* CellProtocols.swift in Sources */,
+				C7852C351C4ACB6B00375089 /* Storyboard.swift in Sources */,
 				C72D33051C4712BE00F88B11 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = RACNest/Support/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = rp.RACNest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -423,6 +440,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = RACNest/Support/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = rp.RACNest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
