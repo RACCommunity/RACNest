@@ -79,9 +79,9 @@ The 5th and 6th we do two things:
  Finally the `authenticationAction` function, which seems a bit complicate, but really isn't:
  
  ```swift
-  private func authenticationAction(isFormValid: MutableProperty<Bool>) -> Action<(), Void, NoError> {
+  private func authenticationAction(isFormValid: MutableProperty<Bool>) -> Action<Void, Void, NoError> {
     
-    return Action<(), Void, NoError>(enabledIf: isFormValid, { [weak self] _ in
+    return Action<Void, Void, NoError>(enabledIf: isFormValid, { [weak self] _ in
         return SignalProducer { o, d in
     
         let username = self?.username.value ?? ""

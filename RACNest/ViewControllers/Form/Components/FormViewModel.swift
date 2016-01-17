@@ -32,9 +32,9 @@ final class FormViewModel {
         authenticate = CocoaAction(action, input: ())
     }
     
-    private func authenticationAction(enableProperty: MutableProperty<Bool>) -> Action<(), Void, NoError> {
+    private func authenticationAction(enableProperty: MutableProperty<Bool>) -> Action<Void, Void, NoError> {
         
-        return Action<(), Void, NoError>(enabledIf: enableProperty, { [weak self] _ in
+        return Action<Void, Void, NoError>(enabledIf: enableProperty, { [weak self] _ in
             return SignalProducer { o, d in
                 
                 let username = self?.username.value ?? ""
