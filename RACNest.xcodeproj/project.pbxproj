@@ -25,6 +25,7 @@
 		C7F7404F1C4B219D00519895 /* Rex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404C1C4B219D00519895 /* Rex.framework */; };
 		C7F740501C4B219D00519895 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */; };
 		C7F740511C4B219D00519895 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404E1C4B219D00519895 /* Result.framework */; };
+		C7F740561C4B272500519895 /* RacExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F740551C4B272500519895 /* RacExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		C7F7404C1C4B219D00519895 /* Rex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rex.framework; path = Carthage/Build/iOS/Rex.framework; sourceTree = "<group>"; };
 		C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		C7F7404E1C4B219D00519895 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		C7F740551C4B272500519895 /* RacExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RacExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 		C72D330A1C471ADB00F88B11 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C7F740541C4B271B00519895 /* RAC Extensions */,
 				C72D330B1C471AEE00F88B11 /* UI */,
 			);
 			path = Components;
@@ -229,6 +232,14 @@
 				C7F7404E1C4B219D00519895 /* Result.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C7F740541C4B271B00519895 /* RAC Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C7F740551C4B272500519895 /* RacExtensions.swift */,
+			);
+			path = "RAC Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,6 +368,7 @@
 				C72D32F81C470FE000F88B11 /* AppDelegate.swift in Sources */,
 				C7852C461C4ACFE000375089 /* MainViewTableCellItem.swift in Sources */,
 				C7852C451C4ACFE000375089 /* MainViewTableCell.swift in Sources */,
+				C7F740561C4B272500519895 /* RacExtensions.swift in Sources */,
 				C7852C331C4ACAAA00375089 /* StoryboardViewController.swift in Sources */,
 				C72D330F1C471B3000F88B11 /* TableViewProtocols.swift in Sources */,
 				C72D330D1C471B0C00F88B11 /* CellProtocols.swift in Sources */,
