@@ -25,16 +25,16 @@ final class FormViewModel {
         self.username = MutableProperty(username)
         self.password = MutableProperty(password)
         
-        let validCredentials = MutableProperty(credentialsValidationRule(username, password))
-        validCredentials <~ combineLatest(self.username.producer, self.password.producer).map(credentialsValidationRule)
+        let isFormValid = MutableProperty(credentialsValidationRule(username, password))
+        isFormValid <~ combineLatest(self.username.producer, self.password.producer).map(credentialsValidationRule)
         
-        let action = authenticationAction(validCredentials)
+        let action = authenticationAction(isFormValid)
         authenticate = CocoaAction(action, input: ())
     }
     
-    private func authenticationAction(enableProperty: MutableProperty<Bool>) -> Action<Void, Void, NoError> {
+    private func authenticationAction(isFormValid: MutableProperty<Bool>) -> Action<Void, Void, NoError> {
         
-        return Action<Void, Void, NoError>(enabledIf: enableProperty, { [weak self] _ in
+        return Action<Void, Void, NoError>(enabledIf: isFormValid, { [weak self] _ in
             return SignalProducer { o, d in
                 
                 let username = self?.username.value ?? ""
