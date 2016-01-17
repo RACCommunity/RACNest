@@ -49,8 +49,8 @@ The second part is inside the `FormViewModel`:
   self.username = MutableProperty(username)
   self.password = MutableProperty(password)
   
-  let validCredentials = MutableProperty(credentialsValidationRule(username, password))
-  validCredentials <~ combineLatest(self.username.producer, self.password.producer).map(credentialsValidationRule)
+  let isFormValid = MutableProperty(credentialsValidationRule(username, password))
+  isFormValid <~ combineLatest(self.username.producer, self.password.producer).map(credentialsValidationRule)
   
   let action = authenticationAction(validCredentials)
   authenticate = CocoaAction(action, input: ())
