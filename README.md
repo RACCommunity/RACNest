@@ -101,7 +101,7 @@ So what's happening here?
 1. Create an action that will be enabled depending on the state of the form (via the `isFormValid`). 
 2. Do the necessary work, in this case update the `NSUserDefaults`, when the action is executed. As you might have guessed, this will happen when the `UIButton` is tapped.
 
-The `SignalProducer` creation will be something I will address another time, for now it's important to understand the concepts from a higher level, once this becomes natural, or obvious, we will address the details. There is also the question about what the hell is this ` Action<(), Void, NoError>`, which I will also address another time. For now you can think of that as a task that:
+The `SignalProducer` creation will be something I will address another time, for now it's important to understand the concepts from a higher level, once this becomes natural, or obvious, we will address the details. There is also the question about what the hell is this ` Action<Void, Void, NoError>`, which I will also address another time. For now you can think of that as a task that:
 
 1. Takes no input to be executed (`Void`)
 2. Has no output, after being executed (`Void`)
