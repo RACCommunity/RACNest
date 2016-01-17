@@ -30,10 +30,5 @@ class FormViewController: UIViewController {
         
         usernameField.becomeFirstResponder()
     }
-    
-    @IBAction func loginAction(sender: AnyObject) {
-        
-        
-    }
 }
 
