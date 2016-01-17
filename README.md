@@ -11,3 +11,9 @@ Examples
 --------
 
 1. [Form 🐥](Documents/1_form.md) 
+
+Contributing
+-----------
+
+I will gladly accept Pull Requests with new examples. If you would like to see an exampple,, but you are unsure on how to do it, start by opening an issue and we will take it from there ✨️. As usual, documentation, or tests, typos fixes, are always welcome as well. ❤️
+
