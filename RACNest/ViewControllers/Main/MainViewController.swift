@@ -12,14 +12,14 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private let mainViewModel = MainViewModel()
+    private let viewModel = MainViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.registerReusableCell(MainViewTableCell)
-
-        tableView.dataSource = mainViewModel
+        
+        tableView.dataSource = viewModel
         tableView.delegate = self
     }
 }
@@ -29,9 +29,12 @@ extension MainViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let item = viewModel.items[indexPath.row]
         
-        let item = mainViewModel.items[indexPath.row]
-        self.performSegue(item.identifier)
+        let viewController = UIStoryboard.defaultStoryboard().instantiateViewControllerWithIdentifier(item.identifier)
+        
+        viewController.title = item.title
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

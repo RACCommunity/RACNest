@@ -8,10 +8,15 @@
 
 import UIKit
 
-protocol StoryboardSegueType : RawRepresentable { }
+protocol StoryboardViewControllerType : RawRepresentable { }
 
-extension UIViewController {
-    func performSegue<S : StoryboardSegueType where S.RawValue == String>(segue: S, sender: AnyObject? = nil) {
-        performSegueWithIdentifier(segue.rawValue, sender: sender)
+extension UIStoryboard {
+    
+    static func defaultStoryboard() -> UIStoryboard {
+        return UIStoryboard(name: "Main", bundle: nil)
+    }
+    
+    func instantiateViewControllerWithIdentifier<S : StoryboardViewControllerType where S.RawValue == String>(identifier: S) -> UIViewController {
+        return instantiateViewControllerWithIdentifier(identifier.rawValue)
     }
 }

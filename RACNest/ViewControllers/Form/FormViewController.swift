@@ -13,6 +13,8 @@ class FormViewController: UIViewController {
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    
+    private var viewModel: FormViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
