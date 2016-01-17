@@ -11,7 +11,7 @@ import UIKit
 struct MainViewTableCellItem {
     
     let title: String
-    let identifier: StoryboardSegue
+    let identifier: StoryboardViewController
 }
 
 extension MainViewTableCellItem: TextPresentable {
