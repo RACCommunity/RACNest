@@ -77,18 +77,18 @@ Finally the `authenticationAction` function, which seems a bit complicate, but r
 ```swift
 private func authenticationAction(isFormValid: MutableProperty<Bool>) -> Action<Void, Void, NoError> {
 
-return Action<Void, Void, NoError>(enabledIf: isFormValid, { [weak self] _ in
-return SignalProducer { o, d in
+  return Action<Void, Void, NoError>(enabledIf: isFormValid, { [weak self] _ in
+      return SignalProducer { o, d in
 
-let username = self?.username.value ?? ""
-let password = self?.password.value ?? ""
+        let username = self?.username.value ?? ""
+        let password = self?.password.value ?? ""
 
-NSUserDefaults.setValue(username, forKey: .Username)
-NSUserDefaults.setValue(password, forKey: .Password)
+        NSUserDefaults.setValue(username, forKey: .Username)
+        NSUserDefaults.setValue(password, forKey: .Password)
 
-o.sendCompleted()
-}
-})
+        o.sendCompleted()
+    }
+  })
 }
 ```
 
