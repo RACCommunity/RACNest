@@ -7,3 +7,17 @@
 //
 
 import Foundation
+import ReactiveCocoa
+
+class SearchViewModel {
+    
+    private let dataSource: [String]
+    
+    init() {
+        
+        let path: String = NSBundle.mainBundle().pathForResource("words", ofType: "txt")!
+        let string: String = try! String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+
+        dataSource = string.characters.split("\n").map(String.init)
+    }
+}
