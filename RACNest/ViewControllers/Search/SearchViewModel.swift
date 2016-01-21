@@ -16,13 +16,16 @@ enum SearchStatus<T> {
 
 class SearchViewModel {
     
-    private let dataSource: MutableProperty<SearchStatus<String>> = MutableProperty(.Loading)
+    let result: MutableProperty<SearchStatus<String>> = MutableProperty(.Loading)
+    
+    private let dataSource: MutableProperty<[String]> = MutableProperty([])
     
     init() {
         
         dataSource <~ SearchViewModel.generateDataSource()
             .startOn(QueueScheduler(name: "private_queue"))
-            .map { SearchStatus.Valid($0) }
+        
+        result <~ SignalProducer(value: dataSource.value).map { SearchStatus.Valid($0) }
     }
     
     static private func generateDataSource() -> SignalProducer<[String], NoError> {
