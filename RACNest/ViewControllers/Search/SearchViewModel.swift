@@ -8,6 +8,7 @@
 
 import Foundation
 import ReactiveCocoa
+import Rex
 
 enum SearchStatus<T> {
     case Loading
@@ -23,10 +24,30 @@ class SearchViewModel {
     
     init() {
         
-        dataSource <~ SearchViewModel.generateDataSource()
-            .startOn(QueueScheduler(name: "private_queue"))
+        let dataSourceGenerator = SearchViewModel.generateDataSource()
+            .startOn(QueueScheduler(name: "GenerateDataSource"))
         
-        result <~ SignalProducer(value: dataSource.value).map { SearchStatus.Valid($0) }
+        let dataSourceGeneratorTrigger: SignalProducer<Void, NoError> = dataSourceGenerator.map{_ in () }.ignoreError()
+        
+        dataSource <~ dataSourceGenerator
+
+        let producer = searchText.producer
+        
+        result <~ producer.map {_ in .Loading }
+        result <~ producer
+            .skipUntil(dataSourceGeneratorTrigger)
+            .throttle(0.3, onScheduler: QueueScheduler(name: "TextThrottle"))
+            .map(wordsSubSet)
+            .map { .Valid($0) }
+    }
+    
+    private func wordsSubSet(word: String) -> [String] {
+        
+        guard  word != "" else { return dataSource.value }
+        
+       return dataSource.value.filter {
+           $0.rangeOfString(word, options: .CaseInsensitiveSearch) !=  nil
+        }
     }
     
     static private func generateDataSource() -> SignalProducer<[String], NoError> {
