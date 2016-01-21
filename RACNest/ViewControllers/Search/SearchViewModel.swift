@@ -16,6 +16,7 @@ enum SearchStatus<T> {
 
 class SearchViewModel {
     
+    let searchText: MutableProperty<String> = MutableProperty("")
     let result: MutableProperty<SearchStatus<String>> = MutableProperty(.Loading)
     
     private let dataSource: MutableProperty<[String]> = MutableProperty([])
