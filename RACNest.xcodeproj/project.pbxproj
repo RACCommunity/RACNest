@@ -15,6 +15,8 @@
 		C72D330D1C471B0C00F88B11 /* CellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72D330C1C471B0C00F88B11 /* CellProtocols.swift */; };
 		C72D330F1C471B3000F88B11 /* TableViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72D330E1C471B3000F88B11 /* TableViewProtocols.swift */; };
 		C76C205B1C504B9D0083F4F5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76C205A1C504B9D0083F4F5 /* SearchViewController.swift */; };
+		C76C205D1C5052DE0083F4F5 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76C205C1C5052DE0083F4F5 /* SearchViewModel.swift */; };
+		C76C20601C5053660083F4F5 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = C76C205F1C5053660083F4F5 /* words.txt */; };
 		C7852C331C4ACAAA00375089 /* StoryboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C321C4ACAAA00375089 /* StoryboardViewController.swift */; };
 		C7852C351C4ACB6B00375089 /* Storyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C341C4ACB6B00375089 /* Storyboard.swift */; };
 		C7852C3D1C4ACF9500375089 /* FormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C3C1C4ACF9500375089 /* FormViewController.swift */; };
@@ -53,6 +55,8 @@
 		C72D330C1C471B0C00F88B11 /* CellProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellProtocols.swift; sourceTree = "<group>"; };
 		C72D330E1C471B3000F88B11 /* TableViewProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewProtocols.swift; sourceTree = "<group>"; };
 		C76C205A1C504B9D0083F4F5 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		C76C205C1C5052DE0083F4F5 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		C76C205F1C5053660083F4F5 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		C7852C321C4ACAAA00375089 /* StoryboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardViewController.swift; sourceTree = "<group>"; };
 		C7852C341C4ACB6B00375089 /* Storyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		C7852C3C1C4ACF9500375089 /* FormViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewController.swift; sourceTree = "<group>"; };
@@ -189,9 +193,19 @@
 		C76C20591C504B750083F4F5 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				C76C205E1C5053660083F4F5 /* DataSource */,
 				C76C205A1C504B9D0083F4F5 /* SearchViewController.swift */,
+				C76C205C1C5052DE0083F4F5 /* SearchViewModel.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		C76C205E1C5053660083F4F5 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				C76C205F1C5053660083F4F5 /* words.txt */,
+			);
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		C7852C311C4ACA9F00375089 /* AppRelated */ = {
@@ -348,6 +362,7 @@
 			files = (
 				C72D32FB1C470FE000F88B11 /* Main.storyboard in Resources */,
 				C72D32F91C470FE000F88B11 /* Assets.xcassets in Resources */,
+				C76C20601C5053660083F4F5 /* words.txt in Resources */,
 				C72D32FA1C470FE000F88B11 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,6 +407,7 @@
 				C7852C451C4ACFE000375089 /* MainViewTableCell.swift in Sources */,
 				C7F740591C4B2A2F00519895 /* UserDefaults.swift in Sources */,
 				C7F740561C4B272500519895 /* RacExtensions.swift in Sources */,
+				C76C205D1C5052DE0083F4F5 /* SearchViewModel.swift in Sources */,
 				C7852C331C4ACAAA00375089 /* StoryboardViewController.swift in Sources */,
 				C72D330F1C471B3000F88B11 /* TableViewProtocols.swift in Sources */,
 				C76C205B1C504B9D0083F4F5 /* SearchViewController.swift in Sources */,
