@@ -11,13 +11,21 @@ import ReactiveCocoa
 
 class SearchViewModel {
     
-    private let dataSource: [String]
+    let dataSource: MutableProperty<[String]> = MutableProperty([])
     
     init() {
         
-        let path: String = NSBundle.mainBundle().pathForResource("words", ofType: "txt")!
-        let string: String = try! String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
-
-        dataSource = string.characters.split("\n").map(String.init)
+        dataSource <~ SearchViewModel.generateDataSource().startOn(QueueScheduler(name: "private_queue"))
+    }
+    
+    static private func generateDataSource() -> SignalProducer<[String], NoError> {
+    
+        return SignalProducer {o, d in
+            
+            let path: String = NSBundle.mainBundle().pathForResource("words", ofType: "txt")!
+            let string: String = try! String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+            o.sendNext(string.characters.split("\n").map(String.init))
+            o.sendCompleted()
+        }
     }
 }
