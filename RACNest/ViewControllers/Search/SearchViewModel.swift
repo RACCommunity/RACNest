@@ -9,13 +9,20 @@
 import Foundation
 import ReactiveCocoa
 
+enum SearchStatus<T> {
+    case Loading
+    case Valid([String])
+}
+
 class SearchViewModel {
     
-    let dataSource: MutableProperty<[String]> = MutableProperty([])
+    private let dataSource: MutableProperty<SearchStatus<String>> = MutableProperty(.Loading)
     
     init() {
         
-        dataSource <~ SearchViewModel.generateDataSource().startOn(QueueScheduler(name: "private_queue"))
+        dataSource <~ SearchViewModel.generateDataSource()
+            .startOn(QueueScheduler(name: "private_queue"))
+            .map { SearchStatus.Valid($0) }
     }
     
     static private func generateDataSource() -> SignalProducer<[String], NoError> {
