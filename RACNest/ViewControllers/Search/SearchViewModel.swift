@@ -18,27 +18,25 @@ enum SearchStatus<T> {
 class SearchViewModel {
     
     let searchText: MutableProperty<String> = MutableProperty("")
-    let result: MutableProperty<SearchStatus<String>> = MutableProperty(.Loading)
-    
+    let result: MutableProperty<[String]> = MutableProperty([])
+
     private let dataSource: MutableProperty<[String]> = MutableProperty([])
     
     init() {
         
-        let dataSourceGenerator = SearchViewModel.generateDataSource()
-            .startOn(QueueScheduler(name: "GenerateDataSource"))
+        let dataSourceIsReady = dataSource.producer.filter { $0.count > 0 }.map { _ in}
         
-        let dataSourceGeneratorTrigger: SignalProducer<Void, NoError> = dataSourceGenerator.map{_ in () }.ignoreError()
+        let dataSourceGenerator = SearchViewModel.generateDataSource()
+            .startOn(QueueScheduler(name: "DataSourceQueue"))
         
         dataSource <~ dataSourceGenerator
 
         let producer = searchText.producer
         
-        result <~ producer.map {_ in .Loading }
         result <~ producer
-            .skipUntil(dataSourceGeneratorTrigger)
-            .throttle(0.3, onScheduler: QueueScheduler(name: "TextThrottle"))
+            .skipUntil(dataSourceIsReady)
+            .throttle(0.3, onScheduler: QueueScheduler(name: "TextSearchQueue"))
             .map(wordsSubSet)
-            .map { .Valid($0) }
     }
     
     private func wordsSubSet(word: String) -> [String] {
