@@ -257,8 +257,8 @@
 		C7CB87131C51AC7000ED9AE6 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				C7CB87141C51AC7000ED9AE6 /* SearchCellItem.swift */,
 				C7CB87151C51AC7000ED9AE6 /* SearchViewModel.swift */,
+				C7CB87141C51AC7000ED9AE6 /* SearchCellItem.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
