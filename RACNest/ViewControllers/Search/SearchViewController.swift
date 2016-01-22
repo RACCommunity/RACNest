@@ -22,8 +22,6 @@ class SearchViewController: UIViewController {
         tableView.registerReusableCell(MainViewTableCell)
                 
         viewModel.result.producer.observeOn(QueueScheduler.mainQueueScheduler).startWithNext {[weak self] text in
-            
-            print(text.count)
             self?.tableView.reloadData()
         }
     }
