@@ -10,12 +10,14 @@ import UIKit
 
 class MainViewModel: NSObject {
     
-    let items: [MainViewTableCellItem]
+    let items: [MainCellItem]
     
     override init() {
         
-        let item1 = MainViewTableCellItem(title: "1. Form 🐥", identifier: .Form)
-        items = [item1]
+        let item1 = MainCellItem(title: "1. Form 🐥", identifier: .Form)
+        let item2 = MainCellItem(title: "2. Search 🔍", identifier: .Search)
+
+        items = [item1, item2]
 
         super.init()
     }
@@ -25,7 +27,7 @@ extension MainViewModel: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
                 
-        let cell: MainViewTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
+        let cell: GenericTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
 
         cell.configure(items[indexPath.row])
 
