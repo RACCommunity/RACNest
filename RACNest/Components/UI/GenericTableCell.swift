@@ -10,7 +10,7 @@ import UIKit
 
 extension GenericTableCell: Reusable {}
 
-class GenericTableCell: UITableViewCell {
+final class GenericTableCell: UITableViewCell {
     
     private let cellDescriptionLabel = UILabel(frame: CGRectZero)
     

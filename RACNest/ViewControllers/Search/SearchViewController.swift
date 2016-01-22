@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!

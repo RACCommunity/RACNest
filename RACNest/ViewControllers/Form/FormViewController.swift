@@ -9,7 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-class FormViewController: UIViewController {
+final class FormViewController: UIViewController {
     
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
