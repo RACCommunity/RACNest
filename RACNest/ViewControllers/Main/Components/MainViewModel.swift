@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewModel: NSObject {
+final class MainViewModel: NSObject {
     
     let items: [MainCellItem]
     
