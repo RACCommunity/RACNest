@@ -10,12 +10,12 @@ import UIKit
 
 class MainViewModel: NSObject {
     
-    let items: [MainViewTableCellItem]
+    let items: [MainCellItem]
     
     override init() {
         
-        let item1 = MainViewTableCellItem(title: "1. Form 🐥", identifier: .Form)
-        let item2 = MainViewTableCellItem(title: "2. Search 🔍", identifier: .Search)
+        let item1 = MainCellItem(title: "1. Form 🐥", identifier: .Form)
+        let item2 = MainCellItem(title: "2. Search 🔍", identifier: .Search)
 
         items = [item1, item2]
 
