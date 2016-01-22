@@ -9,8 +9,7 @@
 import Foundation
 import ReactiveCocoa
 
-
-final class FormViewModel {
+struct FormViewModel {
     
     let username: MutableProperty<String>
     let password: MutableProperty<String>
@@ -34,11 +33,11 @@ final class FormViewModel {
     
     private func authenticationAction(isFormValid: MutableProperty<Bool>) -> Action<Void, Void, NoError> {
         
-        return Action<Void, Void, NoError>(enabledIf: isFormValid, { [weak self] _ in
+        return Action<Void, Void, NoError>(enabledIf: isFormValid, { _ in
             return SignalProducer { o, d in
                 
-                let username = self?.username.value ?? ""
-                let password = self?.password.value ?? ""
+                let username = self.username.value ?? ""
+                let password = self.password.value ?? ""
                 
                 NSUserDefaults.setValue(username, forKey: .Username)
                 NSUserDefaults.setValue(password, forKey: .Password)

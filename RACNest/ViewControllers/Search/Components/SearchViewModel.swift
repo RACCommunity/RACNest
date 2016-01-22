@@ -15,7 +15,7 @@ enum SearchStatus<T> {
     case Valid([String])
 }
 
-class SearchViewModel {
+struct SearchViewModel {
     
     let searchText: MutableProperty<String> = MutableProperty("")
     let result: MutableProperty<[String]> = MutableProperty([])
