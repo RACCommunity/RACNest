@@ -15,7 +15,9 @@ class MainViewModel: NSObject {
     override init() {
         
         let item1 = MainViewTableCellItem(title: "1. Form 🐥", identifier: .Form)
-        items = [item1]
+        let item2 = MainViewTableCellItem(title: "2. Search 🔍", identifier: .Search)
+
+        items = [item1, item2]
 
         super.init()
     }

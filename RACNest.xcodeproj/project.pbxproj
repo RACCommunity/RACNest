@@ -25,6 +25,7 @@
 		C7852C461C4ACFE000375089 /* MainViewTableCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C421C4ACFE000375089 /* MainViewTableCellItem.swift */; };
 		C7852C471C4ACFE000375089 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C431C4ACFE000375089 /* MainViewController.swift */; };
 		C7852C4C1C4B0E2B00375089 /* FormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C4B1C4B0E2B00375089 /* FormViewModel.swift */; };
+		C7CB87101C51A59600ED9AE6 /* SearchCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CB870F1C51A59600ED9AE6 /* SearchCellItem.swift */; };
 		C7F7404F1C4B219D00519895 /* Rex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404C1C4B219D00519895 /* Rex.framework */; };
 		C7F740501C4B219D00519895 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */; };
 		C7F740511C4B219D00519895 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404E1C4B219D00519895 /* Result.framework */; };
@@ -65,6 +66,7 @@
 		C7852C421C4ACFE000375089 /* MainViewTableCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewTableCellItem.swift; sourceTree = "<group>"; };
 		C7852C431C4ACFE000375089 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C7852C4B1C4B0E2B00375089 /* FormViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormViewModel.swift; sourceTree = "<group>"; };
+		C7CB870F1C51A59600ED9AE6 /* SearchCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCellItem.swift; sourceTree = "<group>"; };
 		C7F7404C1C4B219D00519895 /* Rex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rex.framework; path = Carthage/Build/iOS/Rex.framework; sourceTree = "<group>"; };
 		C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		C7F7404E1C4B219D00519895 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
@@ -193,9 +195,10 @@
 		C76C20591C504B750083F4F5 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				C76C205E1C5053660083F4F5 /* DataSource */,
 				C76C205A1C504B9D0083F4F5 /* SearchViewController.swift */,
 				C76C205C1C5052DE0083F4F5 /* SearchViewModel.swift */,
+				C7CB870F1C51A59600ED9AE6 /* SearchCellItem.swift */,
+				C76C205E1C5053660083F4F5 /* DataSource */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 				C72D32F81C470FE000F88B11 /* AppDelegate.swift in Sources */,
 				C7852C461C4ACFE000375089 /* MainViewTableCellItem.swift in Sources */,
 				C7852C451C4ACFE000375089 /* MainViewTableCell.swift in Sources */,
+				C7CB87101C51A59600ED9AE6 /* SearchCellItem.swift in Sources */,
 				C7F740591C4B2A2F00519895 /* UserDefaults.swift in Sources */,
 				C7F740561C4B272500519895 /* RacExtensions.swift in Sources */,
 				C76C205D1C5052DE0083F4F5 /* SearchViewModel.swift in Sources */,
