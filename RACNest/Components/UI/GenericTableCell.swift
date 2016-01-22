@@ -1,5 +1,5 @@
 //
-//  MainViewTableCell.swift
+//  GenericTableCell.swift
 //  RACNest
 //
 //  Created by Rui Peres on 13/01/2016.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension MainViewTableCell: Reusable {}
+extension GenericTableCell: Reusable {}
 
-class MainViewTableCell: UITableViewCell {
+class GenericTableCell: UITableViewCell {
     
     private let cellDescriptionLabel = UILabel(frame: CGRectZero)
     

@@ -19,7 +19,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.registerReusableCell(MainViewTableCell)
+        tableView.registerReusableCell(GenericTableCell)
                 
         viewModel.result.producer.observeOn(QueueScheduler.mainQueueScheduler).startWithNext {[weak self] text in
             self?.tableView.reloadData()
@@ -42,7 +42,7 @@ extension SearchViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: MainViewTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
+        let cell: GenericTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
 
         let searchValue = viewModel.result.value[indexPath.row]
         let searchCellItem = SearchCellItem(title: searchValue)
@@ -52,4 +52,3 @@ extension SearchViewController: UITableViewDataSource {
         return cell
     }
 }
-

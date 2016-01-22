@@ -27,7 +27,7 @@ extension MainViewModel: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
                 
-        let cell: MainViewTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
+        let cell: GenericTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
 
         cell.configure(items[indexPath.row])
 
