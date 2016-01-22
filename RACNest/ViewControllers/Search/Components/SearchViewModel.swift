@@ -24,17 +24,17 @@ class SearchViewModel {
     
     init() {
         
-        let dataSourceIsReady = dataSource.producer.filter { $0.count > 0 }.map { _ in}
-        
         let dataSourceGenerator = SearchViewModel.generateDataSource()
             .startOn(QueueScheduler(name: "DataSourceQueue"))
         
         dataSource <~ dataSourceGenerator
 
         let producer = searchText.producer
-        
+        let dataSourceIsReady = dataSource.producer.filter { $0.count > 0 }
+
+        result <~ dataSourceIsReady.take(1)
         result <~ producer
-            .skipUntil(dataSourceIsReady)
+            .skipUntil(dataSourceIsReady.map { _ in})
             .throttle(0.3, onScheduler: QueueScheduler(name: "TextSearchQueue"))
             .map(wordsSubSet)
     }
