@@ -10,11 +10,6 @@ import Foundation
 import ReactiveCocoa
 import Rex
 
-enum SearchStatus<T> {
-    case Loading
-    case Valid([String])
-}
-
 struct SearchViewModel {
     
     let searchText: MutableProperty<String> = MutableProperty("")
