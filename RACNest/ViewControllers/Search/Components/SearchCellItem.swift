@@ -10,9 +10,17 @@ import UIKit
 
 struct SearchCellItem {
     let title: String
+    let textBeingSearched: String
 }
 
 extension SearchCellItem: TextPresentable {
-    var text: String { return title }
-    var textColor: UIColor { return UIColor.grayColor() }
+    var text: NSAttributedString {
+        
+        let attributedString = NSMutableAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.grayColor()])
+        
+        let range = (title as NSString).rangeOfString(textBeingSearched)
+        attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blueColor(), range: range)
+        
+        return attributedString
+    }
 }

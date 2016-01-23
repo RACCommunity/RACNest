@@ -13,8 +13,7 @@ import UIKit
 
 protocol TextPresentable {
     
-    var text: String { get }
-    var textColor: UIColor { get }
+    var text: NSAttributedString { get }
 }
 
 protocol ViewControllerStoryboardIdentifier {

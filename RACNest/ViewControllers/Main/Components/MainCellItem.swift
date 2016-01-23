@@ -16,8 +16,9 @@ struct MainCellItem {
 
 extension MainCellItem: TextPresentable {
     
-    var text: String { return title }
-    var textColor: UIColor { return .darkGrayColor() }
+    var text: NSAttributedString {
+        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.darkGrayColor()])
+    }
 }
 
 extension MainCellItem: ViewControllerStoryboardIdentifier { }

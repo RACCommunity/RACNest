@@ -44,8 +44,8 @@ extension SearchViewController: UITableViewDataSource {
         
         let cell: GenericTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
 
-        let searchValue = viewModel.result.value[indexPath.row]
-        let searchCellItem = SearchCellItem(title: searchValue)
+        let searchResultItem = viewModel.result.value[indexPath.row]
+        let searchCellItem = SearchCellItem(title: searchResultItem, textBeingSearched: viewModel.searchText.value)
         
         cell.configure(searchCellItem)
         

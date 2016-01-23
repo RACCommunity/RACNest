@@ -26,8 +26,7 @@ final class GenericTableCell: UITableViewCell {
     
     func configure(presentable: TextPresentable) {
         
-        cellDescriptionLabel.text = presentable.text
-        cellDescriptionLabel.textColor = presentable.textColor
+        cellDescriptionLabel.attributedText = presentable.text
         accessoryType = .DisclosureIndicator
     }
     
