@@ -13,33 +13,26 @@ import Rex
 struct SearchViewModel {
     
     let searchText: MutableProperty<String> = MutableProperty("")
-    let result: MutableProperty<[String]> = MutableProperty([])
-
-    private let dataSource: MutableProperty<[String]> = MutableProperty([])
+    let result: AnyProperty<[String]>
     
     init() {
         
         let dataSourceGenerator = SearchViewModel.generateDataSource()
             .startOn(QueueScheduler(name: "DataSourceQueue"))
         
-        dataSource <~ dataSourceGenerator
+        let producer = combineLatest(searchText.producer, dataSourceGenerator)
+                        .throttle(0.3, onScheduler: QueueScheduler(name: "TextSearchQueue"))
+                        .map(SearchViewModel.wordsSubSet)
 
-        let producer = searchText.producer
-        let dataSourceIsReady = dataSource.producer.filter { $0.count > 0 }
-
-        result <~ dataSourceIsReady.take(1)
-        result <~ producer
-            .skipUntil(dataSourceIsReady.map { _ in})
-            .throttle(0.3, onScheduler: QueueScheduler(name: "TextSearchQueue"))
-            .map(wordsSubSet)
+        result = AnyProperty(initialValue: [], producer: producer)
     }
     
-    private func wordsSubSet(word: String) -> [String] {
+    static private func wordsSubSet(searchTerm: String, words: [String]) -> [String] {
         
-        guard  word != "" else { return dataSource.value }
+        guard  searchTerm != "" else { return words }
         
-       return dataSource.value.filter {
-           $0.rangeOfString(word, options: .CaseInsensitiveSearch) !=  nil
+       return words.filter {
+           $0.rangeOfString(searchTerm, options: .CaseInsensitiveSearch) !=  nil
         }
     }
     
@@ -49,6 +42,7 @@ struct SearchViewModel {
             
             let path: String = NSBundle.mainBundle().pathForResource("words", ofType: "txt")!
             let string: String = try! String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+            
             o.sendNext(string.characters.split("\n").map(String.init))
             o.sendCompleted()
         }
