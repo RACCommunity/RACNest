@@ -17,11 +17,11 @@ struct SearchViewModel {
     
     init() {
         
-        let dataSourceGenerator = SearchViewModel.generateDataSource()
-            .startOn(QueueScheduler(name: "DataSourceQueue"))
+        let scheduler = QueueScheduler(name: "search.backgroundQueue")
+        let dataSourceGenerator = SearchViewModel.generateDataSource().startOn(scheduler)
         
         let producer = combineLatest(searchText.producer, dataSourceGenerator)
-            .throttle(0.3, onScheduler: QueueScheduler(name: "TextSearchQueue"))
+            .throttle(0.3, onScheduler: scheduler)
             .map(SearchViewModel.wordsSubSet)
         
         result = AnyProperty(initialValue: [], producer: producer)
