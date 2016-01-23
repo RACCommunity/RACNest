@@ -21,9 +21,9 @@ struct SearchViewModel {
             .startOn(QueueScheduler(name: "DataSourceQueue"))
         
         let producer = combineLatest(searchText.producer, dataSourceGenerator)
-                        .throttle(0.3, onScheduler: QueueScheduler(name: "TextSearchQueue"))
-                        .map(SearchViewModel.wordsSubSet)
-
+            .throttle(0.3, onScheduler: QueueScheduler(name: "TextSearchQueue"))
+            .map(SearchViewModel.wordsSubSet)
+        
         result = AnyProperty(initialValue: [], producer: producer)
     }
     
@@ -31,13 +31,13 @@ struct SearchViewModel {
         
         guard  searchTerm != "" else { return words }
         
-       return words.filter {
-           $0.rangeOfString(searchTerm, options: .CaseInsensitiveSearch) !=  nil
+        return words.filter {
+            $0.rangeOfString(searchTerm, options: .CaseInsensitiveSearch) !=  nil
         }
     }
     
     static private func generateDataSource() -> SignalProducer<[String], NoError> {
-    
+        
         return SignalProducer {o, d in
             
             let path: String = NSBundle.mainBundle().pathForResource("words", ofType: "txt")!
