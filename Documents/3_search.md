@@ -42,16 +42,35 @@ Let's now have a look at the `SearchViewModel`, more specically to how we are bu
             let string: String = try! String(contentsOfFile: path, encoding: NSUTF8StringEncoding)  // 2
             let words = string.characters.split("\n").map(String.init)                              // 3
             
-            observable.sendNext(words)                     
-            observable.sendCompleted()
+            observable.sendNext(words)                                                              // 4
+            observable.sendCompleted()                                                              // 5
         }
     }
 ```
 
 The weird part is how a `SignalProducer` is created, the rest is pretty standard:
 
-1. Get the path to the `words.txt file
-2. Create a single string with all of them
-3. Split them into an array of words
+1. Get the path to the `words.txt` file that's located in our main bundle.
+2. Create a string with the file's content.
+3. Split them into an array of words.
 
 So the `SignalProducer` has you have guessed, is a struct that takes a closure to be initialized. The closure itself is of type `(Signal<Value, Error>.Observer, CompositeDisposable) -> ())`. So what the hell does this means to you?
+
+You can think of the first parameter, the `observable`, as the entity that will control the flow of the `SignalProducer`. As you can see on comment `4`, we are sending the words array down the stream and on line `5` complete it. If there was a case where we would handle an error, we would just:
+
+```
+observable.sendFailure(error)
+```
+
+We will address the second parameter, the disposable, later. On the meantime, you can think of it as the entity that will be used to clean the work, once it's done . The [canonical example](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/FoundationExtensions.swift#L30#L50) would be cancelling an `NSURLSession`:
+
+```
+disposable.addDisposable {
+	task.cancel()
+}
+```
+
+
+
+
+
