@@ -62,7 +62,7 @@ You can think of the first parameter, the `observable`, as the entity that will 
 observable.sendFailure(error)
 ```
 
-We will address the second parameter, the disposable, later. On the meantime, you can think of it as the entity that will be used to clean the work, once it's done . The [canonical example](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/FoundationExtensions.swift#L30#L50) would be cancelling an `NSURLSession`:
+We will address the second parameter, the `disposable`, later. On the meantime, you can think of it as the entity that will be used to clean the work, once it's done . The [canonical example](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/FoundationExtensions.swift#L30#L50) would be cancelling an `NSURLSession`:
 
 ```
 disposable.addDisposable {
