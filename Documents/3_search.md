@@ -62,15 +62,10 @@ You can think of the first parameter, the `observable`, as the entity that will 
 observable.sendFailure(error)
 ```
 
-We will address the second parameter, the `disposable`, later. On the meantime, you can think of it as the entity that will be used to clean the work, once it's done . The [canonical example](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/FoundationExtensions.swift#L30#L50) would be cancelling an `NSURLSession`:
+The second parameter is an instance conforming to the `Disposable` protocol. [From the documentation](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/fd64bf6ea7a83dec13fe42244db470fd9641a9a1/Documentation/FrameworkOverview.md#disposables): 
 
-```
-disposable.addDisposable {
-	task.cancel()
-}
-```
+> When starting a signal producer, a disposable will be returned. This disposable can be used by the caller to cancel the work that has been started (e.g. background processing, network requests, etc.), clean up all temporary resources, then send a final Interrupted event upon the particular signal that was created.
 
+In our example, we don't really use it, since once the reading starts, we can't really interrupt it. A good use case would be for example [this](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/FoundationExtensions.swift#L33#L49). 
 
-
-**[WIP]**
 
