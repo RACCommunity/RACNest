@@ -1,6 +1,6 @@
 #### 3. Search 🔍
 
-For a begginner in the FRP paradigm, throttling is a foreign concept. A quick way  to understand it in the real world is via a search. Let's imagine that you are searching something and everytime you tap the keyboard a new server is initiated. This can be quite expensive and complex to implement. So:
+For a beginner in the FRP paradigm, throttling is a foreign concept. A quick way  to understand it in the real world is via a search. Let's imagine that you are searching something and everytime you tap the keyboard a new server is initiated. This can be quite expensive and complex to implement. So:
 
 1. Character "A" is inputted. 
 2. New server call starts.
@@ -9,7 +9,7 @@ For a begginner in the FRP paradigm, throttling is a foreign concept. A quick wa
 
 The problem with this approach is that it doesn't take into account the frequency at which a new letter is inputted. Not only that, it's a waste of resources.
 
-Throtlling solves this problem by creating an interval between each input. Imagine that the user is inputting a new letter every 0.1s. If we set throttling with an interval of 0.5s, only at the 5th letter the search will commence. This makes more sense than going back and forth with new requests and cancelling the previous one. 
+Throttling solves this problem by creating an interval between each input. Imagine that the user is inputting a new letter every 0.1s. If we set throttling with an interval of 0.5s, only at the 5th letter the search will commence. This makes more sense than going back and forth with new requests and cancelling the previous one. 
 
 ----
 
@@ -21,7 +21,7 @@ viewModel.result.producer.observeOn(QueueScheduler.mainQueueScheduler).startWith
 }
 ```
 
-In this case we are just reloading the `UITableView` everytime a new set of results comes. As a side note, [RxSwift provides](https://github.com/ReactiveX/RxSwift/blob/b00d35a5ef13dbcf57257f47fb14a60a2c924d19/RxCocoa/iOS/UITableView%2BRx.swift) a more integrate approach to this kind of problems. 
+In this case we are just reloading the `UITableView` every time a new set of results comes. As a side note, [RxSwift provides](https://github.com/ReactiveX/RxSwift/blob/b00d35a5ef13dbcf57257f47fb14a60a2c924d19/RxCocoa/iOS/UITableView%2BRx.swift) a more integrate approach to this kind of problems. 
 
 In the second bit, we are setting the new search term:
 
@@ -31,7 +31,7 @@ func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
 }
 ```
 
-Let's now have a look at the `SearchViewModel`, more specically to how we are building the [data source](https://github.com/RuiAAPeres/RACNest/blob/master/RACNest/ViewControllers/Search/DataSource/words.txt):
+Let's now have a look at the `SearchViewModel`, more specifically, to how we are building the [data source](https://github.com/RuiAAPeres/RACNest/blob/master/RACNest/ViewControllers/Search/DataSource/words.txt):
 
 ```
 static private func generateDataSource() -> SignalProducer<[String], NoError> {
@@ -89,18 +89,18 @@ Let's go line by line:
 1. A new `QueueScheduler` is created. A scheduler is a serial execution queue, where the work will be processed. In our case this will serve as a background queue. 
 2. We define that our data source creation, when it starts, should be done in the previously defined scheduler. **The generation hasn't started yet**.
 3. We [combine](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L513#L522) the `searchText.producer` with our data source. What this means is: we will move to step 4 and 5, once they both sent at least one value. This is useful because, we will wait until the data source has been calculated. The `searchText` by default will already have a value, since we have defined it as `MutableProperty("")` (being the `""` its first value). So if the user hasn't searched for anything yet, the function `SearchViewModel.wordsSubSet` will get as input `("", ["a", "lot", "of", "words"]) // (String, [String])`.
-4. Finally the reason for this example: the `throttle`. If you haven't skim any text, this should be fairly easy to understand: `throttle` will make sure a given amount of time passes (in our case 0.3s) before sending a new value. If multiple values were sent, it will go with last one. ([docs here](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L714#L721)). If the user is a quick typer, we will only process her input every 0.3s. ✨
-5. After all this, we just pass the `SearchViewModel.wordsSubSet` to the `map` function, so we can find which words match the user's search. 
-6. **None of what I described above has started!**
-7. We initialize our `result`. The initial value is just an empty array (`[]`), since we don't have anything ready. The second bit, is all our efforts from step 1 to 5. Every time a new array comes (an array filtered based on the search done), the `result.value` is updated. 
+4. Finally the reason for this example: the ([`throttle`](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L714#L721)). If you haven't skim any text, this should be fairly easy to understand: `throttle` will make sure a given amount of time passes (in our case 0.3s) before sending a new value. If multiple values were sent, it will go with last one. Bottom line: if the user is a quick typer, we will only process her input every 0.3s. ✨
+5. Finally, we just pass the `SearchViewModel.wordsSubSet` to the `map` function, so we can find which words match the user's search. The `map` transformation will be in the form of `(String, [String]) -> [String]`.
+6. **None of what I described so far has started!**
+7. We initialize our `result`. The initial value is just an empty array (`[]`), since we don't have anything ready. The second bit, is all our efforts from step 1 to 5. Every time a new array comes (a filtered array based on the search), the `result.value` is updated. 
 
-Ok, so where does this all starts? With the `AnyProperty`'s initilization.
+Ok, so where does this all starts? With the `AnyProperty`'s initilization. We then observe all these changes in the `SearchViewController` and call `reloadData()`.
 
 ----
 
-**Note: The next part is just a downward spiral into madness. If I have missed something, please let me know!**
+**Note: The next part is just a downward spiral into madness. If I have missed something, or I am completely wrong, please let me know!**
 
- Well, we need to see what's happening inside the `AnyProperty` initializer: 
+We start by checking the `AnyProperty` initializer: 
 
 ```
 public init(initialValue: Value, producer: SignalProducer<Value, NoError>) {
@@ -128,9 +128,9 @@ public func <~ <P: MutablePropertyType>(property: P, producer: SignalProducer<P.
 	return disposable
 }
 ```
-All our work (step 1 to 5) is right now that `producer` (`producer: SignalProducer<P.Value, NoError>`). So our producer is started with a `Signal`. The interesting bits, besides the [`startWithSignal`](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L226#L263) implementation (which is way beyong what I am trying to show here), are:
+The interesting bits, besides the [`startWithSignal`](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L226#L263) implementation (which is way beyond what I am trying to show here), are:
 
 1. The property update via the `property <~ signal`, which pretty much just updates the `property.value` when a new value comes ([via Next](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/Property.swift#L261)).
-2. The actual begin of the work when the `startWithCompleted` is called. As you might have noticed with the `let mutableProperty = MutableProperty(initialValue)` above, the `property.producer` is already set. 
+2. The actual beginning of the work when the `startWithCompleted` is called. As you might have noticed with the `let mutableProperty = MutableProperty(initialValue)` above, the `property.producer` is already set. 
 3. The `AnyProperty` internally makes use of a `MutableProperty` to do the heavy lifting. 
 
