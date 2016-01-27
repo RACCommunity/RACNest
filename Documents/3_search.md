@@ -172,3 +172,6 @@ A couple of things here:
 	1. The property update via the `property <~ signal`, which pretty much just updates the `property.value` when a new value comes ([via Next](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/Property.swift#L261)).
 	2. The `AnyProperty` internally makes use of a `MutableProperty` to do the heavy lifting. 
 3. We finally start the work associated with our initial search + data source generation in the `startHandler`. 
+
+
+Since RAC is something I am using everyday I find these explorations very useful. Thanks to [Nacho Soto](https://github.com/NachoSoto) for the explanation! 
