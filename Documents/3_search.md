@@ -129,11 +129,11 @@ public func <~ <P: MutablePropertyType>(property: P, producer: SignalProducer<P.
 }
 ```
 
-Finally, let's have a look at the `startWithSignal`:
+And finally (I promise), the `startWithSignal`:
 
 ```swift
 public func startWithSignal(@noescape setUp: (Signal<Value, Error>, Disposable) -> ()) {
-		let (signal, observer) = Signal<Value, Error>.pipe()
+	let (signal, observer) = Signal<Value, Error>.pipe()
 
 	// Disposes of the work associated with the SignalProducer and any
 	// upstream producers.
@@ -172,6 +172,3 @@ A couple of things here:
 	1. The property update via the `property <~ signal`, which pretty much just updates the `property.value` when a new value comes ([via Next](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/Property.swift#L261)).
 	2. The `AnyProperty` internally makes use of a `MutableProperty` to do the heavy lifting. 
 3. We finally start the work associated with our initial search + data source generation in the `startHandler`. 
-
-
-
