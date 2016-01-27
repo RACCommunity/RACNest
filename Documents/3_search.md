@@ -15,7 +15,7 @@ Throttling solves this problem by creating an interval between each input. Imagi
 
 In our example (that can be found [here](https://github.com/RuiAAPeres/RACNest/tree/master/RACNest/ViewControllers/Search)), we make use of the `throttle` operator to achieve what was described above. Let's start with the `SearchViewController`:
 
-```
+```swift
 viewModel.result.producer.observeOn(QueueScheduler.mainQueueScheduler).startWithNext {[weak self] _ in
     self?.tableView.reloadData()
 }
@@ -25,7 +25,7 @@ In this case we are just reloading the `UITableView` every time a new set of res
 
 In the second bit, we are setting the new search term:
 
-```
+```swift
 func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     viewModel.searchText.value = searchText
 }
@@ -33,7 +33,7 @@ func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
 
 Let's now have a look at the `SearchViewModel`, more specifically, to how we are building the [data source](https://github.com/RuiAAPeres/RACNest/blob/master/RACNest/ViewControllers/Search/DataSource/words.txt):
 
-```
+```swift
 static private func generateDataSource() -> SignalProducer<[String], NoError> {
   
     return SignalProducer {observable, disposable in
@@ -70,7 +70,7 @@ In our example, we don't really use it, since once the reading starts, we can't 
 
 Let's now go for the fun part the `SearchViewModel` initializer:
 
-```
+```swift
 init() {
         
     let scheduler = QueueScheduler(name: "search.backgroundQueue")                     // 1
@@ -102,7 +102,7 @@ Ok, so where does this all starts? With the `AnyProperty`'s initilization. We th
 
 We start by checking the `AnyProperty` initializer: 
 
-```
+```swift
 public init(initialValue: Value, producer: SignalProducer<Value, NoError>) {
 	let mutableProperty = MutableProperty(initialValue)
 	mutableProperty <~ producer
@@ -112,7 +112,7 @@ public init(initialValue: Value, producer: SignalProducer<Value, NoError>) {
 
 Let's have a look at that innocuous `<~`: 
 
-```
+```swift
 public func <~ <P: MutablePropertyType>(property: P, producer: SignalProducer<P.Value, NoError>) -> Disposable {
 	var disposable: Disposable!
 
@@ -128,9 +128,50 @@ public func <~ <P: MutablePropertyType>(property: P, producer: SignalProducer<P.
 	return disposable
 }
 ```
-The interesting bits, besides the [`startWithSignal`](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L226#L263) implementation (which is way beyond what I am trying to show here), are:
 
-1. The property update via the `property <~ signal`, which pretty much just updates the `property.value` when a new value comes ([via Next](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/Property.swift#L261)).
-2. The actual beginning of the work when the `startWithCompleted` is called. As you might have noticed with the `let mutableProperty = MutableProperty(initialValue)` above, the `property.producer` is already set. 
-3. The `AnyProperty` internally makes use of a `MutableProperty` to do the heavy lifting. 
+Finally, let's have a look at the `startWithSignal`:
+
+```swift
+public func startWithSignal(@noescape setUp: (Signal<Value, Error>, Disposable) -> ()) {
+		let (signal, observer) = Signal<Value, Error>.pipe()
+
+	// Disposes of the work associated with the SignalProducer and any
+	// upstream producers.
+	let producerDisposable = CompositeDisposable()
+
+	// Directly disposed of when start() or startWithSignal() is disposed.
+	let cancelDisposable = ActionDisposable {
+		observer.sendInterrupted()
+		producerDisposable.dispose()
+	}
+
+	setUp(signal, cancelDisposable)
+
+	if cancelDisposable.disposed {
+		return
+	}
+
+	let wrapperObserver: Signal<Value, Error>.Observer = Observer { event in
+		observer.action(event)
+
+		if event.isTerminating {
+			// Dispose only after notifying the Signal, so disposal
+			// logic is consistently the last thing to run.
+			producerDisposable.dispose()
+		}
+	}
+
+	startHandler(wrapperObserver, producerDisposable)
+}
+```
+
+A couple of things here:
+
+1. Most of the work being done is related to cleanup and making sure everything is disposed correctly. 
+2. We hook up our handler (the `setUp`, which is coming from the `<~` implementation).
+	1. The property update via the `property <~ signal`, which pretty much just updates the `property.value` when a new value comes ([via Next](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/Property.swift#L261)).
+	2. The `AnyProperty` internally makes use of a `MutableProperty` to do the heavy lifting. 
+3. We finally start the work associated with our initial search + data source generation in the `startHandler`. 
+
+
 
