@@ -71,17 +71,17 @@ In our example, we don't really use it, since once the reading starts, we can't 
 Let's now go for the fun part the `SearchViewModel` initializer:
 
 ```
-    init() {
+init() {
         
-        let scheduler = QueueScheduler(name: "search.backgroundQueue")                     // 1
-        let dataSourceGenerator = SearchViewModel.generateDataSource().startOn(scheduler)  // 2
+    let scheduler = QueueScheduler(name: "search.backgroundQueue")                     // 1
+    let dataSourceGenerator = SearchViewModel.generateDataSource().startOn(scheduler)  // 2
         
-        let producer = combineLatest(searchText.producer, dataSourceGenerator)             // 3
-            .throttle(0.3, onScheduler: scheduler)                                         // 4
-            .map(SearchViewModel.wordsSubSet)                                              // 5
+    let producer = combineLatest(searchText.producer, dataSourceGenerator)             // 3
+        .throttle(0.3, onScheduler: scheduler)                                         // 4
+        .map(SearchViewModel.wordsSubSet)                                              // 5
                                                                                            // 6
-        result = AnyProperty(initialValue: [], producer: producer)                         // 7
-    }
+    result = AnyProperty(initialValue: [], producer: producer)                         // 7
+}
 ```
 
 Let's go line by line:
@@ -94,5 +94,43 @@ Let's go line by line:
 6. **None of what I described above has started!**
 7. We initialize our `result`. The initial value is just an empty array (`[]`), since we don't have anything ready. The second bit, is all our efforts from step 1 to 5. Every time a new array comes (an array filtered based on the search done), the `result.value` is updated. 
 
-Ok, so where does this all starts? [WIP]. 
-        
+Ok, so where does this all starts? With the `AnyProperty`'s initilization.
+
+----
+
+**Note: The next part is just a downward spiral into madness. If I have missed something, please let me know!**
+
+ Well, we need to see what's happening inside the `AnyProperty` initializer: 
+
+```
+public init(initialValue: Value, producer: SignalProducer<Value, NoError>) {
+	let mutableProperty = MutableProperty(initialValue)
+	mutableProperty <~ producer
+	self.init(mutableProperty)
+}
+```
+
+Let's have a look at that innocuous `<~`: 
+
+```
+public func <~ <P: MutablePropertyType>(property: P, producer: SignalProducer<P.Value, NoError>) -> Disposable {
+	var disposable: Disposable!
+
+	producer.startWithSignal { signal, signalDisposable in
+		property <~ signal
+		disposable = signalDisposable
+
+		property.producer.startWithCompleted {
+			signalDisposable.dispose()
+		}
+	}
+
+	return disposable
+}
+```
+All our work (step 1 to 5) is right now that `producer` (`producer: SignalProducer<P.Value, NoError>`). So our producer is started with a `Signal`. The interesting bits, besides the [`startWithSignal`](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L226#L263) implementation (which is way beyong what I am trying to show here), are:
+
+1. The property update via the `property <~ signal`, which pretty much just updates the `property.value` when a new value comes ([via Next](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/Property.swift#L261)).
+2. The actual begin of the work when the `startWithCompleted` is called. As you might have noticed with the `let mutableProperty = MutableProperty(initialValue)` above, the `property.producer` is already set. 
+3. The `AnyProperty` internally makes use of a `MutableProperty` to do the heavy lifting. 
+
