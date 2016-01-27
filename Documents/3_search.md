@@ -34,18 +34,18 @@ func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
 Let's now have a look at the `SearchViewModel`, more specically to how we are building the [data source](https://github.com/RuiAAPeres/RACNest/blob/master/RACNest/ViewControllers/Search/DataSource/words.txt):
 
 ```
-    static private func generateDataSource() -> SignalProducer<[String], NoError> {
-        
-        return SignalProducer {observable, disposable in
+static private func generateDataSource() -> SignalProducer<[String], NoError> {
+  
+    return SignalProducer {observable, disposable in
             
-            let path: String = NSBundle.mainBundle().pathForResource("words", ofType: "txt")!       // 1
-            let string: String = try! String(contentsOfFile: path, encoding: NSUTF8StringEncoding)  // 2
-            let words = string.characters.split("\n").map(String.init)                              // 3
+        let path: String = NSBundle.mainBundle().pathForResource("words", ofType: "txt")!       // 1
+        let string: String = try! String(contentsOfFile: path, encoding: NSUTF8StringEncoding)  // 2
+        let words = string.characters.split("\n").map(String.init)                              // 3
             
-            observable.sendNext(words)                                                              // 4
-            observable.sendCompleted()                                                              // 5
-        }
+        observable.sendNext(words)                                                              // 4                   
+        observable.sendCompleted()                                                              // 5
     }
+}
 ```
 
 The weird part is how a `SignalProducer` is created, the rest is pretty standard:
@@ -66,6 +66,33 @@ The second parameter is an instance conforming to the `Disposable` protocol. [Fr
 
 > When starting a signal producer, a disposable will be returned. This disposable can be used by the caller to cancel the work that has been started (e.g. background processing, network requests, etc.), clean up all temporary resources, then send a final Interrupted event upon the particular signal that was created.
 
-In our example, we don't really use it, since once the reading starts, we can't really interrupt it. A good use case would be for example [this](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/FoundationExtensions.swift#L33#L49). 
+In our example, we don't really use it, since once the reading starts, we can't really interrupt it. A good use case would be [this](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/FoundationExtensions.swift#L33#L49). 
 
+Let's now go for the fun part the `SearchViewModel` initializer:
 
+```
+    init() {
+        
+        let scheduler = QueueScheduler(name: "search.backgroundQueue")                     // 1
+        let dataSourceGenerator = SearchViewModel.generateDataSource().startOn(scheduler)  // 2
+        
+        let producer = combineLatest(searchText.producer, dataSourceGenerator)             // 3
+            .throttle(0.3, onScheduler: scheduler)                                         // 4
+            .map(SearchViewModel.wordsSubSet)                                              // 5
+                                                                                           // 6
+        result = AnyProperty(initialValue: [], producer: producer)                         // 7
+    }
+```
+
+Let's go line by line:
+
+1. A new `QueueScheduler` is created. A scheduler is a serial execution queue, where the work will be processed. In our case this will serve as a background queue. 
+2. We define that our data source creation, when it starts, should be done in the previously defined scheduler. **The generation hasn't started yet**.
+3. We [combine](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L513#L522) the `searchText.producer` with our data source. What this means is: we will move to step 4 and 5, once they both sent at least one value. This is useful because, we will wait until the data source has been calculated. The `searchText` by default will already have a value, since we have defined it as `MutableProperty("")` (being the `""` its first value). So if the user hasn't searched for anything yet, the function `SearchViewModel.wordsSubSet` will get as input `("", ["a", "lot", "of", "words"]) // (String, [String])`.
+4. Finally the reason for this example: the `throttle`. If you haven't skim any text, this should be fairly easy to understand: `throttle` will make sure a given amount of time passes (in our case 0.3s) before sending a new value. If multiple values were sent, it will go with last one. ([docs here](https://github.com/ReactiveCocoa/ReactiveCocoa/blob/master/ReactiveCocoa/Swift/SignalProducer.swift#L714#L721)). If the user is a quick typer, we will only process her input every 0.3s. ✨
+5. After all this, we just pass the `SearchViewModel.wordsSubSet` to the `map` function, so we can find which words match the user's search. 
+6. **None of what I described above has started!**
+7. We initialize our `result`. The initial value is just an empty array (`[]`), since we don't have anything ready. The second bit, is all our efforts from step 1 to 5. Every time a new array comes (an array filtered based on the search done), the `result.value` is updated. 
+
+Ok, so where does this all starts? [WIP]. 
+        
