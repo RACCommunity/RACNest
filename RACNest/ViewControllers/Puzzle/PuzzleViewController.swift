@@ -10,4 +10,17 @@ import UIKit
 
 final class PuzzleViewController: UIViewController {
 
+    private let board = PuzzleBoard(dimension: PuzzleBoardDimension(numberOfRows: 3, numberOfColumns: 3))
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(board)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        board.center = view.center
+    }
 }
