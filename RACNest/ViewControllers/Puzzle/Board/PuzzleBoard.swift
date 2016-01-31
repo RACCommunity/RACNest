@@ -7,37 +7,65 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
 struct PuzzleBoardDimension {
     let numberOfRows: Int
     let numberOfColumns: Int
 }
 
+struct PuzzlePiecePosition {
+    
+    let row: Int
+    let column: Int
+}
+
 final class PuzzleBoard: UIView {
+    
+    private let boardDimension: PuzzleBoardDimension
+    private let puzzlePieceSize: CGSize
     
     var puzzleBoardLinesColor = UIColor.grayColor()
     var puzzleBoardBackgroudColor = UIColor.whiteColor()
-
-    private let puzzlePieceSize = CGSize(width: 100, height: 100)
     
-    init(dimension: PuzzleBoardDimension) {
+    let dataSource: PuzzleBoardDataSource
+    
+    init(boardDimension: PuzzleBoardDimension, puzzlePieceSize: CGSize = CGSize(width: 100, height: 100)) {
         
-        let width = Int(puzzlePieceSize.width) * dimension.numberOfRows
-        let height = Int(puzzlePieceSize.height) * dimension.numberOfColumns
+        self.boardDimension = boardDimension
+        self.puzzlePieceSize = puzzlePieceSize
+        self.dataSource = PuzzleBoardViewModel(dimension: boardDimension, puzzlePieceSize: puzzlePieceSize)
+        
+        let width = Int(puzzlePieceSize.width) * boardDimension.numberOfRows
+        let height = Int(puzzlePieceSize.height) * boardDimension.numberOfColumns
 
         super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
         
         backgroundColor = puzzleBoardBackgroudColor
         
         self.defineBorder()
-        self.defineSquares(dimension)
+        self.defineSquares(boardDimension)
+        self.addPieces(dataSource, puzzlePieceSize: puzzlePieceSize)
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+        
+    // MARK: - Board Construction
     
-    
+    private func addPieces(dataSource: PuzzleBoardDataSource, puzzlePieceSize: CGSize) {
+        
+        dataSource.configurePuzzbleBoard().startWithNext {[weak self] (pieceViewModel, position) in
+            
+                let piece = PuzzlePiece(size: puzzlePieceSize, viewModel: pieceViewModel)
+                self?.addSubview(piece)
+                let x = position.row * Int(puzzlePieceSize.width)
+                let y = position.column * Int(puzzlePieceSize.height)
+                piece.frame = CGRect(origin: CGPoint(x: x, y: y), size: puzzlePieceSize)
+        }
+    }
+
     private func defineBorder() {
         
         layer.borderColor = puzzleBoardLinesColor.CGColor
@@ -67,3 +95,5 @@ final class PuzzleBoard: UIView {
         }
     }
 }
+
+

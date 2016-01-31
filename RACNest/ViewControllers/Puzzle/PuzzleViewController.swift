@@ -10,8 +10,7 @@ import UIKit
 
 final class PuzzleViewController: UIViewController {
 
-    private let board = PuzzleBoard(dimension: PuzzleBoardDimension(numberOfRows: 3, numberOfColumns: 3))
-    
+    private let board = PuzzleBoard(boardDimension: PuzzleBoardDimension(numberOfRows: 3, numberOfColumns: 3))
     
     override func viewDidLoad() {
         super.viewDidLoad()
