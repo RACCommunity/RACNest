@@ -16,6 +16,7 @@
 		C72D330F1C471B3000F88B11 /* TableViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72D330E1C471B3000F88B11 /* TableViewProtocols.swift */; };
 		C741B5A31C5E940400C69372 /* PuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5A21C5E940400C69372 /* PuzzleViewController.swift */; };
 		C741B5A61C5E96DF00C69372 /* PuzzleBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5A51C5E96DF00C69372 /* PuzzleBoard.swift */; };
+		C741B5A81C5EA01900C69372 /* PuzzlePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5A71C5EA01900C69372 /* PuzzlePiece.swift */; };
 		C76C205B1C504B9D0083F4F5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76C205A1C504B9D0083F4F5 /* SearchViewController.swift */; };
 		C76C20601C5053660083F4F5 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = C76C205F1C5053660083F4F5 /* words.txt */; };
 		C7852C331C4ACAAA00375089 /* StoryboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C321C4ACAAA00375089 /* StoryboardViewController.swift */; };
@@ -59,6 +60,7 @@
 		C72D330E1C471B3000F88B11 /* TableViewProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewProtocols.swift; sourceTree = "<group>"; };
 		C741B5A21C5E940400C69372 /* PuzzleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleViewController.swift; sourceTree = "<group>"; };
 		C741B5A51C5E96DF00C69372 /* PuzzleBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleBoard.swift; sourceTree = "<group>"; };
+		C741B5A71C5EA01900C69372 /* PuzzlePiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzlePiece.swift; sourceTree = "<group>"; };
 		C76C205A1C504B9D0083F4F5 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C76C205F1C5053660083F4F5 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		C7852C321C4ACAAA00375089 /* StoryboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				C741B5A51C5E96DF00C69372 /* PuzzleBoard.swift */,
+				C741B5A71C5EA01900C69372 /* PuzzlePiece.swift */,
 			);
 			path = Board;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				C7CB87161C51AC7000ED9AE6 /* SearchCellItem.swift in Sources */,
 				C7CB87121C51AB8E00ED9AE6 /* GenericTableCell.swift in Sources */,
 				C7852C461C4ACFE000375089 /* MainCellItem.swift in Sources */,
+				C741B5A81C5EA01900C69372 /* PuzzlePiece.swift in Sources */,
 				C7F740591C4B2A2F00519895 /* UserDefaults.swift in Sources */,
 				C741B5A31C5E940400C69372 /* PuzzleViewController.swift in Sources */,
 				C7F740561C4B272500519895 /* RacExtensions.swift in Sources */,
