@@ -30,7 +30,7 @@ final class PuzzleBoard: UIView {
         backgroundColor = puzzleBoardBackgroudColor
         
         self.defineBorder()
-        self.definePuzzleSquares(dimension)
+        self.defineSquares(dimension)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -44,7 +44,7 @@ final class PuzzleBoard: UIView {
         layer.borderWidth = 1.0
     }
     
-    private func definePuzzleSquares(dimension: PuzzleBoardDimension) {
+    private func defineSquares(dimension: PuzzleBoardDimension) {
         
         for i in 0..<dimension.numberOfColumns {
             
