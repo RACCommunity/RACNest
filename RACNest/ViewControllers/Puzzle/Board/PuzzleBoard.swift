@@ -30,6 +30,7 @@ final class PuzzleBoard: UIView {
             dataSource?.piecesViewModels
                 .map { (position,viewModel) in (position, viewModel, self.puzzlePieceSize) }
                 .observeOn(QueueScheduler.mainQueueScheduler)
+                .on(completed: defineBoardBoundaries)
                 .startWithNext(addPiece)
         }
     }
@@ -45,9 +46,6 @@ final class PuzzleBoard: UIView {
         super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
         
         backgroundColor = puzzleBoardBackgroudColor
-        
-        self.defineBorder()
-        self.defineSquares(boardDimension)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,28 +63,34 @@ final class PuzzleBoard: UIView {
         piece.frame = CGRect(origin: CGPoint(x: x, y: y), size: puzzlePieceSize)
     }
     
+    private func defineBoardBoundaries() {
+    
+        defineBorder()
+        defineSquares()
+    }
+    
     private func defineBorder() {
         
         layer.borderColor = puzzleBoardLinesColor.CGColor
         layer.borderWidth = 1.0
     }
     
-    private func defineSquares(dimension: PuzzleBoardDimension) {
+    private func defineSquares() {
         
-        for i in 0..<dimension.numberOfColumns {
+        for i in 0..<boardDimension.numberOfColumns {
             
             let column = CALayer()
-            let columnHeight = dimension.numberOfRows * Int(puzzlePieceSize.height)
+            let columnHeight = boardDimension.numberOfRows * Int(puzzlePieceSize.height)
             column.frame = CGRect(origin: CGPoint(x: i * Int(puzzlePieceSize.width), y: 0), size: CGSize(width: 1, height: columnHeight))
             
             column.backgroundColor = puzzleBoardLinesColor.CGColor
             layer.addSublayer(column)
         }
         
-        for i in 0..<dimension.numberOfRows {
+        for i in 0..<boardDimension.numberOfRows {
             
             let row = CALayer()
-            let rownWidth = dimension.numberOfColumns * Int(puzzlePieceSize.width)
+            let rownWidth = boardDimension.numberOfColumns * Int(puzzlePieceSize.width)
             row.frame = CGRect(origin: CGPoint(x: 0, y:  i * Int(puzzlePieceSize.width)), size: CGSize(width: rownWidth, height: 1))
             
             row.backgroundColor = puzzleBoardLinesColor.CGColor
