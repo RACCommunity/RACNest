@@ -7,19 +7,24 @@
 //
 
 import UIKit
+import ReactiveCocoa
+
+private let dimension =  PuzzleBoardDimension(numberOfRows: 3, numberOfColumns: 3)
 
 final class PuzzleViewController: UIViewController {
 
-    private let board = PuzzleBoard(boardDimension: PuzzleBoardDimension(numberOfRows: 3, numberOfColumns: 3))
+    private let board = PuzzleBoard(boardDimension:dimension)
+    private let viewModel: PuzzleViewModel = PuzzleViewModel(image: UIImage(named: "japan_forest")!, dimension: dimension)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(board)
+
+        board.dataSource = viewModel
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         board.center = view.center
     }
 }

@@ -7,9 +7,13 @@
 //
 
 import UIKit
-import ReactiveCocoa
 
 final class PuzzlePieceViewModel {
     
-    let image: MutableProperty<UIImage?> = MutableProperty(nil)
+    let image: UIImage
+    
+    init(image: UIImage) {
+        
+        self.image = image
+    }
 }

@@ -17,8 +17,8 @@
 		C741B5A31C5E940400C69372 /* PuzzleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5A21C5E940400C69372 /* PuzzleViewController.swift */; };
 		C741B5A61C5E96DF00C69372 /* PuzzleBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5A51C5E96DF00C69372 /* PuzzleBoard.swift */; };
 		C741B5A81C5EA01900C69372 /* PuzzlePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5A71C5EA01900C69372 /* PuzzlePiece.swift */; };
-		C741B5B71C5EC65600C69372 /* PuzzleBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5B51C5EC65600C69372 /* PuzzleBoardViewModel.swift */; };
 		C741B5B81C5EC65600C69372 /* PuzzlePieceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5B61C5EC65600C69372 /* PuzzlePieceViewModel.swift */; };
+		C741B5BB1C5ECE8D00C69372 /* PuzzleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C741B5BA1C5ECE8D00C69372 /* PuzzleViewModel.swift */; };
 		C76C205B1C504B9D0083F4F5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76C205A1C504B9D0083F4F5 /* SearchViewController.swift */; };
 		C76C20601C5053660083F4F5 /* words.txt in Resources */ = {isa = PBXBuildFile; fileRef = C76C205F1C5053660083F4F5 /* words.txt */; };
 		C7852C331C4ACAAA00375089 /* StoryboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7852C321C4ACAAA00375089 /* StoryboardViewController.swift */; };
@@ -63,8 +63,8 @@
 		C741B5A21C5E940400C69372 /* PuzzleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleViewController.swift; sourceTree = "<group>"; };
 		C741B5A51C5E96DF00C69372 /* PuzzleBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleBoard.swift; sourceTree = "<group>"; };
 		C741B5A71C5EA01900C69372 /* PuzzlePiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzlePiece.swift; sourceTree = "<group>"; };
-		C741B5B51C5EC65600C69372 /* PuzzleBoardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleBoardViewModel.swift; sourceTree = "<group>"; };
 		C741B5B61C5EC65600C69372 /* PuzzlePieceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzlePieceViewModel.swift; sourceTree = "<group>"; };
+		C741B5BA1C5ECE8D00C69372 /* PuzzleViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleViewModel.swift; sourceTree = "<group>"; };
 		C76C205A1C504B9D0083F4F5 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C76C205F1C5053660083F4F5 /* words.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = words.txt; sourceTree = "<group>"; };
 		C7852C321C4ACAAA00375089 /* StoryboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryboardViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				C741B5A21C5E940400C69372 /* PuzzleViewController.swift */,
+				C741B5B91C5ECE8100C69372 /* ViewModel */,
 				C741B5A41C5E96D800C69372 /* Board */,
 			);
 			path = Puzzle;
@@ -226,8 +227,15 @@
 		C741B5B41C5EC65600C69372 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C741B5B51C5EC65600C69372 /* PuzzleBoardViewModel.swift */,
 				C741B5B61C5EC65600C69372 /* PuzzlePieceViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C741B5B91C5ECE8100C69372 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C741B5BA1C5ECE8D00C69372 /* PuzzleViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -467,8 +475,8 @@
 				C76C205B1C504B9D0083F4F5 /* SearchViewController.swift in Sources */,
 				C741B5A61C5E96DF00C69372 /* PuzzleBoard.swift in Sources */,
 				C72D330D1C471B0C00F88B11 /* CellProtocols.swift in Sources */,
-				C741B5B71C5EC65600C69372 /* PuzzleBoardViewModel.swift in Sources */,
 				C7852C4C1C4B0E2B00375089 /* FormViewModel.swift in Sources */,
+				C741B5BB1C5ECE8D00C69372 /* PuzzleViewModel.swift in Sources */,
 				C7852C351C4ACB6B00375089 /* Storyboard.swift in Sources */,
 				C7852C3D1C4ACF9500375089 /* FormViewController.swift in Sources */,
 				C7852C471C4ACFE000375089 /* MainViewController.swift in Sources */,

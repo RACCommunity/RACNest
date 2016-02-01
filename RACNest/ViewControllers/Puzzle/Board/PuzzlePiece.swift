@@ -7,11 +7,28 @@
 //
 
 import UIKit
-import UIKit
+import ReactiveCocoa
+
+struct PuzzlePiecePosition {
+    
+    let row: Int
+    let column: Int
+}
+
+extension PuzzlePiecePosition: Hashable {
+    
+    var hashValue: Int {
+        return "\(row),\(column)".hash
+    }
+}
+
+func ==(lhs: PuzzlePiecePosition, rhs: PuzzlePiecePosition) -> Bool {
+    return lhs.hashValue == rhs.hashValue
+}
 
 final class PuzzlePiece: UIView {
     
-    private let puzzleImage: UIImageView = UIImageView()
+    private let puzzleImageView: UIImageView = UIImageView()
     private let viewModel: PuzzlePieceViewModel
     
     init(size: CGSize, viewModel: PuzzlePieceViewModel) {
@@ -19,15 +36,14 @@ final class PuzzlePiece: UIView {
         self.viewModel = viewModel
         super.init(frame: CGRect(origin: CGPointZero, size: size))
         
-        viewModel.image.producer.startWithNext {[weak self] image in
-            self?.puzzleImage.image = image
-        }
+        addSubview(puzzleImageView)
+        self.puzzleImageView.image = viewModel.image
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override func layoutSubviews() {
-        puzzleImage.center = center
+        puzzleImageView.frame = bounds
     }
 }
