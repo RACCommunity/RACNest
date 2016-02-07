@@ -10,10 +10,12 @@ import UIKit
 
 final class PuzzlePieceViewModel {
     
+    let piecePosition: PuzzlePiecePosition
     let image: UIImage
-    
-    init(image: UIImage) {
+
+    init(piecePosition: PuzzlePiecePosition, image: UIImage) {
         
+        self.piecePosition = piecePosition
         self.image = image
     }
 }

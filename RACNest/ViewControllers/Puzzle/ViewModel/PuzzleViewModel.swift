@@ -11,14 +11,14 @@ import ReactiveCocoa
 
 protocol PuzzleBoardDataSource: class {
     
-    var piecesViewModels: SignalProducer<(PuzzlePiecePosition, PuzzlePieceViewModel), NoError> { get }
+    var piecesViewModels: SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> { get }
 }
 
 extension PuzzleViewModel: PuzzleBoardDataSource { }
 
 final class PuzzleViewModel {
     
-    let piecesViewModels: SignalProducer<(PuzzlePiecePosition, PuzzlePieceViewModel), NoError>
+    let piecesViewModels: SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError>
 
     init(image: UIImage, dimension: PuzzleBoardDimension) {
         
@@ -28,9 +28,7 @@ final class PuzzleViewModel {
         let randomPiecePosition = randomPosition(dimension)
         let filter = filterPuzzlePiecePosition(randomPiecePosition)
         
-        piecesViewModels = producer.filter(filter).map { (position, image) in
-            return (position, PuzzlePieceViewModel(image: image))
-        }
+        piecesViewModels = producer.filter(filter).map(PuzzlePieceViewModel.init).collect().map { ($0, randomPiecePosition) }
     }
 }
 
@@ -42,7 +40,7 @@ private func randomPosition(dimension: PuzzleBoardDimension) -> PuzzlePiecePosit
     return PuzzlePiecePosition(row: row, column: column)
 }
 
-private func filterPuzzlePiecePosition(skippedPosition: PuzzlePiecePosition) -> (PuzzlePiecePosition,UIImage) -> Bool {
+private func filterPuzzlePiecePosition(skippedPosition: PuzzlePiecePosition) -> (PuzzlePiecePosition, UIImage) -> Bool {
     
     return { (position, image) in
         return skippedPosition != position

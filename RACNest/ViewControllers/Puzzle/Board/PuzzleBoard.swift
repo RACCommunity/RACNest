@@ -28,7 +28,7 @@ final class PuzzleBoard: UIView {
         self.boardDimension = boardDimension
         self.puzzlePieceSize = puzzlePieceSize
         self.dataSource = PuzzleViewModel(image: image, dimension: boardDimension)
-
+        
         let width = Int(puzzlePieceSize.width) * boardDimension.numberOfRows
         let height = Int(puzzlePieceSize.height) * boardDimension.numberOfColumns
         
@@ -36,29 +36,52 @@ final class PuzzleBoard: UIView {
         
         backgroundColor = puzzleBoardBackgroudColor
         
-        dataSource.piecesViewModels
-            .observeOn(QueueScheduler.mainQueueScheduler)
-            .on(completed: defineBoardBoundaries)
-            .startWithNext(addPiece)
+        bootstrap()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Board Construction
+    // MARK: - Board bootstrap
     
-    private func addPiece(position: PuzzlePiecePosition, viewModel: PuzzlePieceViewModel) {
+    private func bootstrap() {
         
-        let piece = PuzzlePiece(size: puzzlePieceSize, viewModel: viewModel)
-        self.addSubview(piece)
-        let x = position.row * Int(puzzlePieceSize.width)
-        let y = position.column * Int(puzzlePieceSize.height)
-        piece.frame = CGRect(origin: CGPoint(x: x, y: y), size: puzzlePieceSize)
+        let piecesDataSource = dataSource.piecesViewModels
+            .observeOn(QueueScheduler.mainQueueScheduler)
+            .map { (viewModels, skippedPiece) in (viewModels, skippedPiece, self.puzzlePieceSize)}
+            .flatMap(.Latest, transform: addPieces)
+            .on(completed: { self.defineBoardBoundaries() })
+
+        piecesDataSource.start()
     }
     
-    private func defineBoardBoundaries() {
+    // MARK: - Board Construction
     
+    private func addPieces(viewModels: [PuzzlePieceViewModel], skippedPiece: PuzzlePiecePosition, puzzlePieceSize: CGSize) -> SignalProducer<([PuzzlePiece], PuzzlePiecePosition), NoError> {
+        
+        return SignalProducer {o, d in
+            
+            var puzzlePieces: [PuzzlePiece] = []
+            
+            viewModels.forEach { viewModel in
+                
+                let piece = PuzzlePiece(size: puzzlePieceSize, viewModel: viewModel)
+                self.addSubview(piece)
+                puzzlePieces.append(piece)
+                
+                let x = viewModel.piecePosition.row * Int(puzzlePieceSize.width)
+                let y = viewModel.piecePosition.column * Int(puzzlePieceSize.height)
+                piece.frame = CGRect(origin: CGPoint(x: x, y: y), size: puzzlePieceSize)
+            }
+            
+            o.sendNext((puzzlePieces,skippedPiece))
+            o.sendCompleted()
+        }
+    }
+    
+    private func defineBoardBoundaries()  {
+        
         defineBorder()
         defineSquares()
     }
