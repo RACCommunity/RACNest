@@ -27,7 +27,7 @@ final class PuzzleBoard: UIView {
         
         self.boardDimension = boardDimension
         self.puzzlePieceSize = puzzlePieceSize
-        self.dataSource = PuzzleViewModel(image: image, dimension: boardDimension)
+        self.dataSource = PuzzleBoardDataSource(image: image, dimension: boardDimension)
         
         let width = Int(puzzlePieceSize.width) * boardDimension.numberOfRows
         let height = Int(puzzlePieceSize.height) * boardDimension.numberOfColumns

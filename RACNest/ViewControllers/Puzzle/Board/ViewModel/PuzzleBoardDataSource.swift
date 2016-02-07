@@ -1,5 +1,5 @@
 //
-//  PuzzleViewModel.swift
+//  PuzzleBoardDataSource.swift
 //  RACNest
 //
 //  Created by Rui Peres on 31/01/2016.
@@ -9,14 +9,7 @@
 import UIKit
 import ReactiveCocoa
 
-protocol PuzzleBoardDataSource: class {
-    
-    var piecesViewModels: SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> { get }
-}
-
-extension PuzzleViewModel: PuzzleBoardDataSource { }
-
-final class PuzzleViewModel {
+final class PuzzleBoardDataSource {
     
     let piecesViewModels: SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError>
 
