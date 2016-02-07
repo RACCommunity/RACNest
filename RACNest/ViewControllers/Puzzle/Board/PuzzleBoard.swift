@@ -18,33 +18,28 @@ final class PuzzleBoard: UIView {
     
     private let boardDimension: PuzzleBoardDimension
     private let puzzlePieceSize: CGSize
+    private var dataSource: PuzzleBoardDataSource
     
     var puzzleBoardLinesColor = UIColor.grayColor()
     var puzzleBoardBackgroudColor = UIColor.whiteColor()
     
-    weak var dataSource: PuzzleBoardDataSource? {
-        didSet {
-            
-            subviews.forEach { $0.removeFromSuperview() }
-            
-            dataSource?.piecesViewModels
-                .observeOn(QueueScheduler.mainQueueScheduler)
-                .on(completed: defineBoardBoundaries)
-                .startWithNext(addPiece)
-        }
-    }
-    
-    init(boardDimension: PuzzleBoardDimension, puzzlePieceSize: CGSize = CGSize(width: 100, height: 100)) {
+    init(boardDimension: PuzzleBoardDimension, image: UIImage, puzzlePieceSize: CGSize = CGSize(width: 100, height: 100)) {
         
         self.boardDimension = boardDimension
         self.puzzlePieceSize = puzzlePieceSize
-        
+        self.dataSource = PuzzleViewModel(image: image, dimension: boardDimension)
+
         let width = Int(puzzlePieceSize.width) * boardDimension.numberOfRows
         let height = Int(puzzlePieceSize.height) * boardDimension.numberOfColumns
         
         super.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
         
         backgroundColor = puzzleBoardBackgroudColor
+        
+        dataSource.piecesViewModels
+            .observeOn(QueueScheduler.mainQueueScheduler)
+            .on(completed: defineBoardBoundaries)
+            .startWithNext(addPiece)
     }
     
     required init?(coder aDecoder: NSCoder) {
