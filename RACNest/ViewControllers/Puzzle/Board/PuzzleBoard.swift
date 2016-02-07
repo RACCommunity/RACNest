@@ -28,7 +28,6 @@ final class PuzzleBoard: UIView {
             subviews.forEach { $0.removeFromSuperview() }
             
             dataSource?.piecesViewModels
-                .map { (position,viewModel) in (position, viewModel, self.puzzlePieceSize) }
                 .observeOn(QueueScheduler.mainQueueScheduler)
                 .on(completed: defineBoardBoundaries)
                 .startWithNext(addPiece)
@@ -54,7 +53,7 @@ final class PuzzleBoard: UIView {
     
     // MARK: - Board Construction
     
-    private func addPiece(position: PuzzlePiecePosition, viewModel: PuzzlePieceViewModel, size: CGSize) {
+    private func addPiece(position: PuzzlePiecePosition, viewModel: PuzzlePieceViewModel) {
         
         let piece = PuzzlePiece(size: puzzlePieceSize, viewModel: viewModel)
         self.addSubview(piece)
