@@ -31,6 +31,7 @@
 		C7CB87161C51AC7000ED9AE6 /* SearchCellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CB87141C51AC7000ED9AE6 /* SearchCellItem.swift */; };
 		C7CB87171C51AC7000ED9AE6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CB87151C51AC7000ED9AE6 /* SearchViewModel.swift */; };
 		C7E353681C680DC200A6C9DE /* PuzzleBoardDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E353671C680DC200A6C9DE /* PuzzleBoardDataSource.swift */; };
+		C7E3536A1C680E5C00A6C9DE /* PuzzleBoardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E353691C680E5C00A6C9DE /* PuzzleBoardAnimator.swift */; };
 		C7F7404F1C4B219D00519895 /* Rex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404C1C4B219D00519895 /* Rex.framework */; };
 		C7F740501C4B219D00519895 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */; };
 		C7F740511C4B219D00519895 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404E1C4B219D00519895 /* Result.framework */; };
@@ -77,6 +78,7 @@
 		C7CB87141C51AC7000ED9AE6 /* SearchCellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCellItem.swift; sourceTree = "<group>"; };
 		C7CB87151C51AC7000ED9AE6 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		C7E353671C680DC200A6C9DE /* PuzzleBoardDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleBoardDataSource.swift; sourceTree = "<group>"; };
+		C7E353691C680E5C00A6C9DE /* PuzzleBoardAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PuzzleBoardAnimator.swift; sourceTree = "<group>"; };
 		C7F7404C1C4B219D00519895 /* Rex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rex.framework; path = Carthage/Build/iOS/Rex.framework; sourceTree = "<group>"; };
 		C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		C7F7404E1C4B219D00519895 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				C7E353671C680DC200A6C9DE /* PuzzleBoardDataSource.swift */,
+				C7E353691C680E5C00A6C9DE /* PuzzleBoardAnimator.swift */,
 				C741B5B61C5EC65600C69372 /* PuzzlePieceViewModel.swift */,
 			);
 			path = ViewModel;
@@ -472,6 +475,7 @@
 				C7852C351C4ACB6B00375089 /* Storyboard.swift in Sources */,
 				C7852C3D1C4ACF9500375089 /* FormViewController.swift in Sources */,
 				C7852C471C4ACFE000375089 /* MainViewController.swift in Sources */,
+				C7E3536A1C680E5C00A6C9DE /* PuzzleBoardAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

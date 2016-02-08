@@ -19,7 +19,8 @@ final class PuzzleBoard: UIView {
     private let boardDimension: PuzzleBoardDimension
     private let puzzlePieceSize: CGSize
     private var dataSource: PuzzleBoardDataSource
-    
+    private var animator: PuzzleBoardAnimator
+
     var puzzleBoardLinesColor = UIColor.grayColor()
     var puzzleBoardBackgroudColor = UIColor.whiteColor()
     
@@ -28,6 +29,7 @@ final class PuzzleBoard: UIView {
         self.boardDimension = boardDimension
         self.puzzlePieceSize = puzzlePieceSize
         self.dataSource = PuzzleBoardDataSource(image: image, dimension: boardDimension)
+        self.animator = PuzzleBoardAnimator(dimension: boardDimension)
         
         let width = Int(puzzlePieceSize.width) * boardDimension.numberOfRows
         let height = Int(puzzlePieceSize.height) * boardDimension.numberOfColumns
@@ -52,30 +54,44 @@ final class PuzzleBoard: UIView {
             .map { (viewModels, skippedPiece) in (viewModels, skippedPiece, self.puzzlePieceSize)}
             .flatMap(.Latest, transform: addPieces)
             .on(completed: { self.defineBoardBoundaries() })
-
+            .flatMap(.Latest, transform: animator.movePieceRandomly)
+        
         piecesDataSource.start()
+    }
+    
+    // MARK - Animation 
+    
+    private func pieceAnimation(pieceSize: CGSize) -> (PuzzlePiece, PuzzlePiecePosition) -> Void {
+        
+        return { (puzzlePiece, piecePosition) in
+            
+            UIView.animateWithDuration(0.3) {
+                
+                let newX = piecePosition.column * Int(pieceSize.width)
+                let newY = piecePosition.row * Int(pieceSize.height)
+                
+                let newLocation = CGPoint(x: newX, y: newY)
+                puzzlePiece.frame.origin = newLocation
+            }
+        }
     }
     
     // MARK: - Board Construction
     
-    private func addPieces(viewModels: [PuzzlePieceViewModel], skippedPiece: PuzzlePiecePosition, puzzlePieceSize: CGSize) -> SignalProducer<([PuzzlePiece], PuzzlePiecePosition), NoError> {
+    private func addPieces(viewModels: [PuzzlePieceViewModel], skippedPiece: PuzzlePiecePosition, puzzlePieceSize: CGSize) -> SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> {
         
         return SignalProducer {o, d in
             
-            var puzzlePieces: [PuzzlePiece] = []
-            
             viewModels.forEach { viewModel in
                 
-                let piece = PuzzlePiece(size: puzzlePieceSize, viewModel: viewModel)
+                let animation = self.pieceAnimation(self.puzzlePieceSize)
+                let piece = PuzzlePiece(size: puzzlePieceSize, moveAnimation: animation, viewModel: viewModel)
                 self.addSubview(piece)
-                puzzlePieces.append(piece)
                 
-                let x = viewModel.piecePosition.row * Int(puzzlePieceSize.width)
-                let y = viewModel.piecePosition.column * Int(puzzlePieceSize.height)
-                piece.frame = CGRect(origin: CGPoint(x: x, y: y), size: puzzlePieceSize)
+                piece.frame = CGRect(origin: piece.frame.origin, size: puzzlePieceSize)
             }
             
-            o.sendNext((puzzlePieces,skippedPiece))
+            o.sendNext((viewModels,skippedPiece))
             o.sendCompleted()
         }
     }

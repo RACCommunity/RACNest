@@ -7,15 +7,18 @@
 //
 
 import UIKit
+import ReactiveCocoa
 
 final class PuzzlePieceViewModel {
     
-    let piecePosition: PuzzlePiecePosition
+    let currentPiecePosition: MutableProperty<PuzzlePiecePosition>
+    let originalPiecePosition: ConstantProperty<PuzzlePiecePosition>
     let image: UIImage
 
-    init(piecePosition: PuzzlePiecePosition, image: UIImage) {
+    init(originalPiecePosition: PuzzlePiecePosition, image: UIImage) {
         
-        self.piecePosition = piecePosition
+        self.originalPiecePosition = ConstantProperty(originalPiecePosition)
+        self.currentPiecePosition = MutableProperty(originalPiecePosition)
         self.image = image
     }
 }

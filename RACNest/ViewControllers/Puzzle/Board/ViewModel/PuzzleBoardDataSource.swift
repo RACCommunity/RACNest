@@ -30,7 +30,7 @@ private func randomPosition(dimension: PuzzleBoardDimension) -> PuzzlePiecePosit
     let row = Int(arc4random_uniform(UInt32(dimension.numberOfRows)))
     let column = Int(arc4random_uniform(UInt32(dimension.numberOfColumns)))
 
-    return PuzzlePiecePosition(row: row, column: column)
+    return PuzzlePiecePosition(row, column)
 }
 
 private func filterPuzzlePiecePosition(skippedPosition: PuzzlePiecePosition) -> (PuzzlePiecePosition, UIImage) -> Bool {
@@ -48,13 +48,13 @@ private func sliceImage(image: UIImage, dimension: PuzzleBoardDimension) -> Sign
         let height = Int(image.size.height) / dimension.numberOfRows
         let imageSize = CGSize(width: width, height: height)
         
-        for i in 0..<dimension.numberOfRows {
-            for j in 0..<dimension.numberOfColumns {
+        for row in 0..<dimension.numberOfRows {
+            for column in 0..<dimension.numberOfColumns {
                 
-                let x = i * width
-                let y = j * height
+                let x = column * width
+                let y = row * height
                 let frame = CGRect(origin: CGPoint(x: x, y: y), size: imageSize)
-                let position = PuzzlePiecePosition(row: i, column: j)
+                let position = PuzzlePiecePosition(row, column)
                 
                 guard let newImage = CGImageCreateWithImageInRect(image.CGImage, frame) else { continue }
                 
