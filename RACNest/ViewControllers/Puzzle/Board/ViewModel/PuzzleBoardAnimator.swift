@@ -23,13 +23,8 @@ struct PuzzleBoardAnimator {
     
     func movePieceRandomly(pieces: [PuzzlePieceViewModel], skippedPosition: PuzzlePiecePosition) -> SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> {
         
-        var chain: SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> = createPieceMovementProducer(pieces, skippedPosition: skippedPosition)
-        
-        (1...50).forEach { _ in
-            chain = chain.flatMap(.Latest, transform: createPieceMovementProducer)
-        }
-        
-        return chain
+        return createPieceMovementProducer(pieces, skippedPosition: skippedPosition)
+            .chain(50, transformation: createPieceMovementProducer)
     }
     
     private func createPieceMovementProducer(pieces: [PuzzlePieceViewModel], skippedPosition: PuzzlePiecePosition) -> SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> {

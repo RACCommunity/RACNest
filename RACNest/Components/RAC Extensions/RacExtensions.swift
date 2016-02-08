@@ -22,3 +22,17 @@ extension UITextField {
         }
     }
 }
+
+extension SignalProducer {
+    
+    func chain(times: Int, transformation: Value -> SignalProducer<Value, Error>) -> SignalProducer<Value, Error> {
+        
+        var chain = self
+        
+        (0..<times).forEach { _ in
+            chain = chain.flatMap(.Latest, transform: transformation)
+        }
+        
+        return chain
+    }
+}
