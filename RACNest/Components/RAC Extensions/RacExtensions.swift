@@ -9,6 +9,7 @@
 import UIKit
 import ReactiveCocoa
 import Rex
+import Result
 
 extension UITextField {
 

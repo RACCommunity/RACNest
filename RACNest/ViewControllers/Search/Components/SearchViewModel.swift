@@ -9,6 +9,7 @@
 import Foundation
 import ReactiveCocoa
 import Rex
+import Result
 
 struct SearchViewModel {
     
