@@ -14,8 +14,24 @@ struct FormViewModel {
     
     let username: MutableProperty<String>
     let password: MutableProperty<String>
-    
-    var authenticate: CocoaAction!
+
+    private let isFormValid: MutableProperty<Bool>
+
+    private(set) lazy var authenticateAction: Action<Void, Void, NoError> = {
+        
+        return Action<Void, Void, NoError>(enabledIf: self.isFormValid, { _ in
+            return SignalProducer { o, d in
+
+                let username = self.username.value ?? ""
+                let password = self.password.value ?? ""
+
+                NSUserDefaults.setValue(username, forKey: .Username)
+                NSUserDefaults.setValue(password, forKey: .Password)
+
+                o.sendCompleted()
+            }
+        })
+    }()
     
     init(credentialsValidationRule: (String, String) -> Bool = validateCredentials) {
         
@@ -25,28 +41,10 @@ struct FormViewModel {
         self.username = MutableProperty(username)
         self.password = MutableProperty(password)
         
-        let isFormValid = MutableProperty(credentialsValidationRule(username, password))
+        isFormValid = MutableProperty(credentialsValidationRule(username, password))
         isFormValid <~ combineLatest(self.username.producer, self.password.producer).map(credentialsValidationRule)
-        
-        let action = authenticationAction(isFormValid)
-        authenticate = CocoaAction(action, input: ())
     }
-    
-    private func authenticationAction(isFormValid: MutableProperty<Bool>) -> Action<Void, Void, NoError> {
-        
-        return Action<Void, Void, NoError>(enabledIf: isFormValid, { _ in
-            return SignalProducer { o, d in
-                
-                let username = self.username.value ?? ""
-                let password = self.password.value ?? ""
-                
-                NSUserDefaults.setValue(username, forKey: .Username)
-                NSUserDefaults.setValue(password, forKey: .Password)
-                
-                o.sendCompleted()
-            }
-            })
-    }
+
 }
 
 private func validateCredentials(username: String, password: String) -> Bool {
