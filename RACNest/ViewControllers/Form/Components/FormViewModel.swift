@@ -48,6 +48,14 @@ struct FormViewModel {
 
 }
 
+extension FormViewModel {
+
+    var authenticate: CocoaAction {
+        return CocoaAction(authenticateAction, input: ())
+    }
+
+}
+
 private func validateCredentials(username: String, password: String) -> Bool {
     
     let usernameRule = username.characters.count > 5
