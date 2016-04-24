@@ -25,7 +25,7 @@ final class FormViewController: UIViewController {
         
         viewModel.username <~ usernameField.rex_textSignal
         viewModel.password <~ passwordField.rex_textSignal
-        
+
         loginButton.rex_pressed <~ SignalProducer(value: viewModel.authenticate)
         
         usernameField.becomeFirstResponder()
