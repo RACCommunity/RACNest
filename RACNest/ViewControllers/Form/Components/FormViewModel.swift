@@ -8,6 +8,7 @@
 
 import Foundation
 import ReactiveCocoa
+import ReactiveSwift
 import Result
 
 struct FormViewModel {
@@ -17,25 +18,25 @@ struct FormViewModel {
     let username: MutableProperty<String>
     let password: MutableProperty<String>
     
-    init(credentialsValidationRule: (String, String) -> Bool = validateCredentials) {
+    init(credentialsValidationRule: @escaping (String, String) -> Bool = validateCredentials) {
         
-        let username = NSUserDefaults.value(forKey: .Username)
-        let password = NSUserDefaults.value(forKey: .Password)
+        let username = UserDefaults.value(forKey: .Username)
+        let password = UserDefaults.value(forKey: .Password)
         
         let usernameProperty = MutableProperty(username)
         let passwordProperty = MutableProperty(password)
 
         let isFormValid = MutableProperty(credentialsValidationRule(username, password))
-        isFormValid <~ combineLatest(usernameProperty.producer, passwordProperty.producer).map(credentialsValidationRule)
+        isFormValid <~ SignalProducer.combineLatest(usernameProperty.producer, passwordProperty.producer).map(credentialsValidationRule)
 
         let authenticateAction = Action<Void, Void, NoError>(enabledIf: isFormValid, { _ in
             return SignalProducer { o, d in
 
-                let username = usernameProperty.value ?? ""
-                let password = passwordProperty.value ?? ""
+                let username = usernameProperty.value 
+                let password = passwordProperty.value 
 
-                NSUserDefaults.setValue(username, forKey: .Username)
-                NSUserDefaults.setValue(password, forKey: .Password)
+                UserDefaults.setValue(value: username, forKey: .Username)
+                UserDefaults.setValue(value: password, forKey: .Password)
 
                 o.sendCompleted()
             }
@@ -44,14 +45,6 @@ struct FormViewModel {
         self.username = usernameProperty
         self.password = passwordProperty
         self.authenticateAction = authenticateAction
-    }
-
-}
-
-extension FormViewModel {
-
-    var authenticate: CocoaAction {
-        return CocoaAction(authenticateAction, input: ())
     }
 
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ReactiveSwift
 import ReactiveCocoa
 
 final class FormViewController: UIViewController {
@@ -23,12 +24,11 @@ final class FormViewController: UIViewController {
         usernameField.text = viewModel.username.value
         passwordField.text = viewModel.password.value
         
-        viewModel.username <~ usernameField.rex_textSignal
-        viewModel.password <~ passwordField.rex_textSignal
+        viewModel.username <~ usernameField.reactive.continuousTextValues.filterMap { $0 }
+        viewModel.password <~ passwordField.reactive.continuousTextValues.filterMap { $0 }
 
-        loginButton.rex_pressed <~ SignalProducer(value: viewModel.authenticate)
+        loginButton.reactive.pressed = CocoaAction(viewModel.authenticateAction)
         
         usernameField.becomeFirstResponder()
     }
 }
-
