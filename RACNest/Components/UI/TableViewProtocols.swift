@@ -1,12 +1,3 @@
-//
-//  TableViewProtocols.swift
-//  RACNest
-//
-//  Created by Rui Peres on 13/01/2016.
-//  Copyright © 2016 Rui Peres. All rights reserved.
-//
-
-import Foundation
 import UIKit
 
 // Taken from here https://alisoftware.github.io/swift/generics/2016/01/06/generic-tableviewcells/

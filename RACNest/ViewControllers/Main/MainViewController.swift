@@ -1,11 +1,3 @@
-//
-//  MainViewController.swift
-//  RACNest
-//
-//  Created by Rui Peres on 13/01/2016.
-//  Copyright © 2016 Rui Peres. All rights reserved.
-//
-
 import UIKit
 
 final class MainViewController: UIViewController {
@@ -37,4 +29,3 @@ extension MainViewController: UITableViewDelegate {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
-

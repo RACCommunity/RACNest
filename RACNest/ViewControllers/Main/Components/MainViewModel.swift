@@ -1,11 +1,3 @@
-//
-//  MainViewModel.swift
-//  RACNest
-//
-//  Created by Rui Peres on 13/01/2016.
-//  Copyright © 2016 Rui Peres. All rights reserved.
-//
-
 import UIKit
 
 final class MainViewModel: NSObject {
@@ -37,5 +29,3 @@ extension MainViewModel: UITableViewDataSource {
         return items.count
     }
 }
-
-

@@ -1,11 +1,3 @@
-//
-//  UserDefaults.swift
-//  RACNest
-//
-//  Created by Rui Peres on 17/01/2016.
-//  Copyright © 2016 Rui Peres. All rights reserved.
-//
-
 import Foundation
 
 enum UserDefaults: String {
