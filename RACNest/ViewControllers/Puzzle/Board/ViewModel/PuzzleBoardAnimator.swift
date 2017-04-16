@@ -21,20 +21,14 @@ struct PuzzleBoardAnimator {
 
     private func createPieceMovementProducer(pieces: [PuzzlePieceViewModel], skippedPosition: PuzzlePiecePosition) -> SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> {
 
-        return SignalProducer { o, d in
+        let positionToBeMovedTo = self.randomPosition(positions: self.candidates(skippedPosition: skippedPosition))
 
-            let allPositions = pieces.map { $0.currentPiecePosition.value }
-            let positionToBeMovedTo = self.randomPosition(positions: self.candidates(positions: allPositions, skippedPosition: skippedPosition))
+        let associatedViewModel = pieces.filter { $0.currentPiecePosition.value == positionToBeMovedTo}.first!
+        let newSkippedPosition = associatedViewModel.currentPiecePosition.value
 
-            let associatedViewModel = pieces.filter { $0.currentPiecePosition.value == positionToBeMovedTo}.first!
-            let newSkippedPosition = associatedViewModel.currentPiecePosition.value
+        associatedViewModel.currentPiecePosition.value = skippedPosition
 
-            associatedViewModel.currentPiecePosition.value = skippedPosition
-
-            o.send(value: (pieces, newSkippedPosition))
-            o.sendCompleted()
-            }
-            .delay(0.3, on: QueueScheduler.main)
+        return SignalProducer(value: (pieces, newSkippedPosition)) .delay(0.3, on: QueueScheduler.main)
     }
 
     private func randomPosition(positions: [PuzzlePiecePosition]) -> PuzzlePiecePosition {
@@ -43,7 +37,7 @@ struct PuzzleBoardAnimator {
         return positions[index]
     }
 
-    private func candidates(positions: [PuzzlePiecePosition], skippedPosition: PuzzlePiecePosition) -> [PuzzlePiecePosition] {
+    private func candidates(skippedPosition: PuzzlePiecePosition) -> [PuzzlePiecePosition] {
 
         let maxBoardRow = dimension.numberOfRows - 1
         let maxBoardColumn = dimension.numberOfColumns - 1
@@ -62,17 +56,14 @@ struct PuzzleBoardAnimator {
         // botom right corner
         case (maxBoardRow, maxBoardColumn) :
             return [newPPP(maxBoardRow - 1, maxBoardColumn), newPPP(maxBoardRow, maxBoardColumn - 1)]
-
         // Top Edge && Bottom Edge
         case (let aRow, let aColumn) where aRow == 0 || aRow == maxBoardRow:
             let rowOffset = aRow == 0 ? 1 : -1
             return [newPPP(aRow, aColumn - 1), newPPP(aRow, aColumn + 1), newPPP(aRow + rowOffset, aColumn)]
-
         // Left and Right Edge
         case (let aRow, let aColumn) where aColumn == 0 || aColumn == maxBoardColumn:
             let columnOffset = aColumn == 0 ? 1 : -1
             return [newPPP(aRow - 1, aColumn), newPPP(aRow + 1, aColumn), newPPP(aRow, aColumn + columnOffset)]
-
         // All other cases
         case (let aRow, let aColumn):
             return [newPPP(aRow - 1, aColumn), newPPP(aRow + 1, aColumn), newPPP(aRow, aColumn + 1), newPPP(aRow, aColumn - 1)]

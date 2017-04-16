@@ -1,6 +1,6 @@
 import UIKit
 
-private let dimension =  PuzzleBoardDimension(numberOfRows: 3, numberOfColumns: 3)
+private let dimension = PuzzleBoardDimension(numberOfRows: 3, numberOfColumns: 3)
 
 final class PuzzleViewController: UIViewController {
 

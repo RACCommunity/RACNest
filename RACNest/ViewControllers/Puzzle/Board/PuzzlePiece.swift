@@ -2,7 +2,6 @@ import UIKit
 import ReactiveSwift
 
 struct PuzzlePiecePosition {
-    
     let row: Int
     let column: Int
     
@@ -13,14 +12,13 @@ struct PuzzlePiecePosition {
 }
 
 extension PuzzlePiecePosition: Hashable {
-    
     var hashValue: Int {
         return "\(row),\(column)".hash
     }
-}
 
-func ==(lhs: PuzzlePiecePosition, rhs: PuzzlePiecePosition) -> Bool {
-    return lhs.hashValue == rhs.hashValue
+    static func ==(lhs: PuzzlePiecePosition, rhs: PuzzlePiecePosition) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
 }
 
 typealias MovePiece = (PuzzlePiece, PuzzlePiecePosition) -> Void
