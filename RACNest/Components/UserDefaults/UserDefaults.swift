@@ -9,20 +9,17 @@
 import Foundation
 
 enum UserDefaults: String {
-    
     case Username = "username"
     case Password = "password"
 }
 
-extension NSUserDefaults {
+extension UserDefaults {
     
     static func value(forKey key: UserDefaults) -> String {
-        
-        return standardUserDefaults().objectForKey(key.rawValue) as? String ?? ""
+        return Foundation.UserDefaults.standard.object(forKey: key.rawValue) as? String ?? ""
     }
     
     static func setValue(value: String, forKey key: UserDefaults) {
-        
-        standardUserDefaults().setValue(value, forKey: key.rawValue)
+        Foundation.UserDefaults.standard.set(value, forKey: key.rawValue)
     }
 }

@@ -24,17 +24,16 @@ final class MainViewModel: NSObject {
 }
 
 extension MainViewModel: UITableViewDataSource {
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-                
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: GenericTableCell = tableView.dequeueReusableCell(indexPath: indexPath)
 
-        cell.configure(items[indexPath.row])
+        cell.configure(presentable: items[indexPath.row])
 
         return cell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
 }
