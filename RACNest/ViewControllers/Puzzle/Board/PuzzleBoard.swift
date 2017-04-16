@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import ReactiveSwift
 import ReactiveCocoa
+import Result
 
 struct PuzzleBoardDimension {
     let numberOfRows: Int
@@ -21,8 +23,8 @@ final class PuzzleBoard: UIView {
     private var dataSource: PuzzleBoardDataSource
     private var animator: PuzzleBoardAnimator
 
-    var puzzleBoardLinesColor = UIColor.grayColor()
-    var puzzleBoardBackgroudColor = UIColor.whiteColor()
+    var puzzleBoardLinesColor = UIColor.gray
+    var puzzleBoardBackgroudColor = UIColor.white
     
     init(boardDimension: PuzzleBoardDimension, image: UIImage, puzzlePieceSize: CGSize = CGSize(width: 100, height: 100)) {
         
@@ -50,11 +52,11 @@ final class PuzzleBoard: UIView {
     private func bootstrap() {
         
         let piecesDataSource = dataSource.piecesViewModels
-            .observeOn(QueueScheduler.mainQueueScheduler)
+            .observe(on: QueueScheduler.main)
             .map { (viewModels, skippedPiece) in (viewModels, skippedPiece, self.puzzlePieceSize)}
-            .flatMap(.Latest, transform: addPieces)
+            .flatMap(.latest, transform: addPieces)
             .on(completed: { self.defineBoardBoundaries() })
-            .flatMap(.Latest, transform: animator.movePieceRandomly)
+            .flatMap(.latest, transform: animator.movePieceRandomly)
         
         piecesDataSource.start()
     }
@@ -65,7 +67,7 @@ final class PuzzleBoard: UIView {
         
         return { (puzzlePiece, piecePosition) in
             
-            UIView.animateWithDuration(0.3) {
+            UIView.animate(withDuration: 0.3) {
                 
                 let newX = piecePosition.column * Int(pieceSize.width)
                 let newY = piecePosition.row * Int(pieceSize.height)
@@ -84,14 +86,14 @@ final class PuzzleBoard: UIView {
             
             viewModels.forEach { viewModel in
                 
-                let animation = self.pieceAnimation(self.puzzlePieceSize)
+                let animation = self.pieceAnimation(pieceSize: self.puzzlePieceSize)
                 let piece = PuzzlePiece(size: puzzlePieceSize, moveAnimation: animation, viewModel: viewModel)
                 self.addSubview(piece)
                 
                 piece.frame = CGRect(origin: piece.frame.origin, size: puzzlePieceSize)
             }
             
-            o.sendNext((viewModels,skippedPiece))
+            o.send(value: (viewModels,skippedPiece))
             o.sendCompleted()
         }
     }
@@ -104,7 +106,7 @@ final class PuzzleBoard: UIView {
     
     private func defineBorder() {
         
-        layer.borderColor = puzzleBoardLinesColor.CGColor
+        layer.borderColor = puzzleBoardLinesColor.cgColor
         layer.borderWidth = 1.0
     }
     
@@ -116,7 +118,7 @@ final class PuzzleBoard: UIView {
             let columnHeight = boardDimension.numberOfRows * Int(puzzlePieceSize.height)
             column.frame = CGRect(origin: CGPoint(x: i * Int(puzzlePieceSize.width), y: 0), size: CGSize(width: 1, height: columnHeight))
             
-            column.backgroundColor = puzzleBoardLinesColor.CGColor
+            column.backgroundColor = puzzleBoardLinesColor.cgColor
             layer.addSublayer(column)
         }
         
@@ -126,7 +128,7 @@ final class PuzzleBoard: UIView {
             let rownWidth = boardDimension.numberOfColumns * Int(puzzlePieceSize.width)
             row.frame = CGRect(origin: CGPoint(x: 0, y:  i * Int(puzzlePieceSize.width)), size: CGSize(width: rownWidth, height: 1))
             
-            row.backgroundColor = puzzleBoardLinesColor.CGColor
+            row.backgroundColor = puzzleBoardLinesColor.cgColor
             layer.addSublayer(row)
         }
     }

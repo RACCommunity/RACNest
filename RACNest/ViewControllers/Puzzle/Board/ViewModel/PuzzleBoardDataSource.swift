@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import ReactiveSwift
 import ReactiveCocoa
+import Result
 
 final class PuzzleBoardDataSource {
     
@@ -16,10 +18,10 @@ final class PuzzleBoardDataSource {
     init(image: UIImage, dimension: PuzzleBoardDimension) {
         
         let scheduler = QueueScheduler(name: "puzzle.backgroundQueue")
-        let producer = sliceImage(image, dimension: dimension).startOn(scheduler)
+        let producer = sliceImage(image: image, dimension: dimension).start(on: scheduler)
         
-        let randomPiecePosition = randomPosition(dimension)
-        let filter = filterPuzzlePiecePosition(randomPiecePosition)
+        let randomPiecePosition = randomPosition(dimension: dimension)
+        let filter = filterPuzzlePiecePosition(skippedPosition: randomPiecePosition)
         
         piecesViewModels = producer.filter(filter).map(PuzzlePieceViewModel.init).collect().map { ($0, randomPiecePosition) }
     }
@@ -56,9 +58,10 @@ private func sliceImage(image: UIImage, dimension: PuzzleBoardDimension) -> Sign
                 let frame = CGRect(origin: CGPoint(x: x, y: y), size: imageSize)
                 let position = PuzzlePiecePosition(row, column)
                 
-                guard let newImage = CGImageCreateWithImageInRect(image.CGImage, frame) else { continue }
-                
-                o.sendNext((position, UIImage(CGImage: newImage)))
+                guard let newImage = image.cgImage?.cropping(to: frame) else { continue }
+
+
+                o.send(value: (position, UIImage(cgImage: newImage)))
             }
         }
         o.sendCompleted()

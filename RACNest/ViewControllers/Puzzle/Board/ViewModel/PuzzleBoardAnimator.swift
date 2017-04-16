@@ -6,10 +6,11 @@
 //  Copyright © 2016 Rui Peres. All rights reserved.
 //
 
+import Result
 import ReactiveCocoa
-import Rex
+import ReactiveSwift
 
-private func newPPP(row: Int, _ column: Int) -> PuzzlePiecePosition {
+private func newPPP(_ row: Int, _ column: Int) -> PuzzlePiecePosition {
     return PuzzlePiecePosition(row, column)
 }
 
@@ -23,8 +24,8 @@ struct PuzzleBoardAnimator {
     
     func movePieceRandomly(pieces: [PuzzlePieceViewModel], skippedPosition: PuzzlePiecePosition) -> SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> {
         
-        return createPieceMovementProducer(pieces, skippedPosition: skippedPosition)
-            .chain(50, transformation: createPieceMovementProducer)
+        return createPieceMovementProducer(pieces: pieces, skippedPosition: skippedPosition)
+            .chain(times: 50, transformation: createPieceMovementProducer)
     }
     
     private func createPieceMovementProducer(pieces: [PuzzlePieceViewModel], skippedPosition: PuzzlePiecePosition) -> SignalProducer<([PuzzlePieceViewModel], PuzzlePiecePosition), NoError> {
@@ -32,17 +33,17 @@ struct PuzzleBoardAnimator {
         return SignalProducer { o, d in
             
             let allPositions = pieces.map { $0.currentPiecePosition.value }
-            let positionToBeMovedTo = self.randomPosition(self.candidates(allPositions, skippedPosition: skippedPosition))
+            let positionToBeMovedTo = self.randomPosition(positions: self.candidates(positions: allPositions, skippedPosition: skippedPosition))
             
             let associatedViewModel = pieces.filter { $0.currentPiecePosition.value == positionToBeMovedTo}.first!
             let newSkippedPosition = associatedViewModel.currentPiecePosition.value
             
             associatedViewModel.currentPiecePosition.value = skippedPosition
             
-            o.sendNext((pieces, newSkippedPosition))
+            o.send(value: (pieces, newSkippedPosition))
             o.sendCompleted()
             }
-            .deferred(0.3, onScheduler: QueueScheduler.mainQueueScheduler)
+            .delay(0.3, on: QueueScheduler.main)
     }
     
     private func randomPosition(positions: [PuzzlePiecePosition]) -> PuzzlePiecePosition {

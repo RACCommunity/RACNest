@@ -1,11 +1,3 @@
-//
-//  Storyboard.swift
-//  RACNest
-//
-//  Created by Rui Peres on 16/01/2016.
-//  Copyright © 2016 Rui Peres. All rights reserved.
-//
-
 import UIKit
 
 protocol StoryboardViewControllerType : RawRepresentable { }
@@ -16,7 +8,7 @@ extension UIStoryboard {
         return UIStoryboard(name: "Main", bundle: nil)
     }
     
-    func instantiateViewControllerWithIdentifier<S : StoryboardViewControllerType where S.RawValue == String>(identifier: S) -> UIViewController {
-        return instantiateViewControllerWithIdentifier(identifier.rawValue)
+    func instantiateViewControllerWithIdentifier<S : StoryboardViewControllerType>(identifier: S) -> UIViewController where S.RawValue == String {
+        return instantiateViewController(withIdentifier: identifier.rawValue)
     }
 }

@@ -1,11 +1,3 @@
-//
-//  MainCellItem.swift
-//  RACNest
-//
-//  Created by Rui Peres on 13/01/2016.
-//  Copyright © 2016 Rui Peres. All rights reserved.
-//
-
 import UIKit
 
 struct MainCellItem {
@@ -17,7 +9,7 @@ struct MainCellItem {
 extension MainCellItem: TextPresentable {
     
     var text: NSAttributedString {
-        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.darkGrayColor()])
+        return NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName: UIColor.darkGray])
     }
 }
 

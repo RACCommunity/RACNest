@@ -1,51 +1,43 @@
-//
-//  FormViewModel.swift
-//  RACNest
-//
-//  Created by Rui Peres on 16/01/2016.
-//  Copyright © 2016 Rui Peres. All rights reserved.
-//
-
-import Foundation
 import ReactiveCocoa
+import ReactiveSwift
+import Result
 
 struct FormViewModel {
-    
+
+    let authenticateAction: Action<Void, Void, NoError>
+
     let username: MutableProperty<String>
     let password: MutableProperty<String>
     
-    var authenticate: CocoaAction!
-    
-    init(credentialsValidationRule: (String, String) -> Bool = validateCredentials) {
+    init(credentialsValidationRule: @escaping (String, String) -> Bool = validateCredentials) {
         
-        let username = NSUserDefaults.value(forKey: .Username)
-        let password = NSUserDefaults.value(forKey: .Password)
+        let username = UserDefaults.value(forKey: .Username)
+        let password = UserDefaults.value(forKey: .Password)
         
-        self.username = MutableProperty(username)
-        self.password = MutableProperty(password)
-        
+        let usernameProperty = MutableProperty(username)
+        let passwordProperty = MutableProperty(password)
+
         let isFormValid = MutableProperty(credentialsValidationRule(username, password))
-        isFormValid <~ combineLatest(self.username.producer, self.password.producer).map(credentialsValidationRule)
-        
-        let action = authenticationAction(isFormValid)
-        authenticate = CocoaAction(action, input: ())
-    }
-    
-    private func authenticationAction(isFormValid: MutableProperty<Bool>) -> Action<Void, Void, NoError> {
-        
-        return Action<Void, Void, NoError>(enabledIf: isFormValid, { _ in
+        isFormValid <~ SignalProducer.combineLatest(usernameProperty.producer, passwordProperty.producer).map(credentialsValidationRule)
+
+        let authenticateAction = Action<Void, Void, NoError>(enabledIf: isFormValid, { _ in
             return SignalProducer { o, d in
-                
-                let username = self.username.value ?? ""
-                let password = self.password.value ?? ""
-                
-                NSUserDefaults.setValue(username, forKey: .Username)
-                NSUserDefaults.setValue(password, forKey: .Password)
-                
+
+                let username = usernameProperty.value 
+                let password = passwordProperty.value 
+
+                UserDefaults.setValue(value: username, forKey: .Username)
+                UserDefaults.setValue(value: password, forKey: .Password)
+
                 o.sendCompleted()
             }
-            })
+        })
+
+        self.username = usernameProperty
+        self.password = passwordProperty
+        self.authenticateAction = authenticateAction
     }
+
 }
 
 private func validateCredentials(username: String, password: String) -> Bool {

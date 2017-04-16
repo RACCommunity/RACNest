@@ -1,23 +1,15 @@
-//
-//  MainViewController.swift
-//  RACNest
-//
-//  Created by Rui Peres on 13/01/2016.
-//  Copyright © 2016 Rui Peres. All rights reserved.
-//
-
 import UIKit
 
 final class MainViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private let viewModel = MainViewModel()
+    fileprivate let viewModel = MainViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.registerReusableCell(GenericTableCell)
+        tableView.registerReusableCell(GenericTableCell.self)
         
         tableView.dataSource = viewModel
         tableView.delegate = self
@@ -26,15 +18,14 @@ final class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDelegate {
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         let item = viewModel.items[indexPath.row]
         
-        let viewController = UIStoryboard.defaultStoryboard().instantiateViewControllerWithIdentifier(item.identifier)
+        let viewController = UIStoryboard.defaultStoryboard().instantiateViewControllerWithIdentifier(identifier: item.identifier)
         
         viewController.title = item.title
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
-

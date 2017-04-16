@@ -39,17 +39,17 @@ final class PuzzlePiece: UIView {
     private let viewModel: PuzzlePieceViewModel
     private let moveAnimation: MovePiece
     
-    init(size: CGSize, moveAnimation: MovePiece, viewModel: PuzzlePieceViewModel) {
+    init(size: CGSize, moveAnimation: @escaping MovePiece, viewModel: PuzzlePieceViewModel) {
         
         self.viewModel = viewModel
         self.moveAnimation = moveAnimation
         
-        super.init(frame: CGRect(origin: CGPointZero, size: size))
+        super.init(frame: CGRect(origin: .zero, size: size))
         
         addSubview(puzzleImageView)
         self.puzzleImageView.image = viewModel.image
         
-        viewModel.currentPiecePosition.producer.startWithNext { piecePosition in
+        viewModel.currentPiecePosition.producer.startWithValues { piecePosition in
             moveAnimation(self, piecePosition)
         }
     }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20B7B851EA2EFC100BC5ABA /* RacExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20B7B841EA2EFC100BC5ABA /* RacExtensions.swift */; };
+		B25D051B1EA2CCBD0039D323 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25D051A1EA2CCBD0039D323 /* ReactiveSwift.framework */; };
 		C72D32E21C470F5300F88B11 /* RACNestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72D32E11C470F5300F88B11 /* RACNestTests.swift */; };
 		C72D32F81C470FE000F88B11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72D32ED1C470FE000F88B11 /* AppDelegate.swift */; };
 		C72D32F91C470FE000F88B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C72D32EF1C470FE000F88B11 /* Assets.xcassets */; };
@@ -32,10 +34,8 @@
 		C7CB87171C51AC7000ED9AE6 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CB87151C51AC7000ED9AE6 /* SearchViewModel.swift */; };
 		C7E353681C680DC200A6C9DE /* PuzzleBoardDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E353671C680DC200A6C9DE /* PuzzleBoardDataSource.swift */; };
 		C7E3536A1C680E5C00A6C9DE /* PuzzleBoardAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7E353691C680E5C00A6C9DE /* PuzzleBoardAnimator.swift */; };
-		C7F7404F1C4B219D00519895 /* Rex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404C1C4B219D00519895 /* Rex.framework */; };
 		C7F740501C4B219D00519895 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */; };
 		C7F740511C4B219D00519895 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7F7404E1C4B219D00519895 /* Result.framework */; };
-		C7F740561C4B272500519895 /* RacExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F740551C4B272500519895 /* RacExtensions.swift */; };
 		C7F740591C4B2A2F00519895 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F740581C4B2A2F00519895 /* UserDefaults.swift */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B20B7B841EA2EFC100BC5ABA /* RacExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RacExtensions.swift; path = ../../../../../Desktop/RacExtensions.swift; sourceTree = "<group>"; };
+		B25D051A1EA2CCBD0039D323 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		C72D32C91C470F5200F88B11 /* RACNest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RACNest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C72D32DD1C470F5300F88B11 /* RACNestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RACNestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C72D32E11C470F5300F88B11 /* RACNestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RACNestTests.swift; sourceTree = "<group>"; };
@@ -82,7 +84,6 @@
 		C7F7404C1C4B219D00519895 /* Rex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rex.framework; path = Carthage/Build/iOS/Rex.framework; sourceTree = "<group>"; };
 		C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		C7F7404E1C4B219D00519895 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		C7F740551C4B272500519895 /* RacExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RacExtensions.swift; sourceTree = "<group>"; };
 		C7F740581C4B2A2F00519895 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,7 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7F7404F1C4B219D00519895 /* Rex.framework in Frameworks */,
+				B25D051B1EA2CCBD0039D323 /* ReactiveSwift.framework in Frameworks */,
 				C7F740501C4B219D00519895 /* ReactiveCocoa.framework in Frameworks */,
 				C7F740511C4B219D00519895 /* Result.framework in Frameworks */,
 			);
@@ -107,6 +108,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B20B7B7F1EA2EF9B00BC5ABA /* RAC Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B20B7B841EA2EFC100BC5ABA /* RacExtensions.swift */,
+			);
+			path = "RAC Extensions";
+			sourceTree = "<group>";
+		};
 		C72D32C01C470F5200F88B11 = {
 			isa = PBXGroup;
 			children = (
@@ -188,8 +197,8 @@
 		C72D330A1C471ADB00F88B11 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B20B7B7F1EA2EF9B00BC5ABA /* RAC Extensions */,
 				C7F740571C4B2A2700519895 /* UserDefaults */,
-				C7F740541C4B271B00519895 /* RAC Extensions */,
 				C72D330B1C471AEE00F88B11 /* UI */,
 			);
 			path = Components;
@@ -308,19 +317,12 @@
 		C7F740521C4B21AD00519895 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B25D051A1EA2CCBD0039D323 /* ReactiveSwift.framework */,
 				C7F7404C1C4B219D00519895 /* Rex.framework */,
 				C7F7404D1C4B219D00519895 /* ReactiveCocoa.framework */,
 				C7F7404E1C4B219D00519895 /* Result.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C7F740541C4B271B00519895 /* RAC Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				C7F740551C4B272500519895 /* RacExtensions.swift */,
-			);
-			path = "RAC Extensions";
 			sourceTree = "<group>";
 		};
 		C7F740571C4B2A2700519895 /* UserDefaults */ = {
@@ -377,7 +379,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Rui Peres";
 				TargetAttributes = {
 					C72D32C81C470F5200F88B11 = {
@@ -436,7 +438,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Rex.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 			);
@@ -456,6 +458,7 @@
 			files = (
 				C7852C441C4ACFE000375089 /* MainViewModel.swift in Sources */,
 				C72D32F81C470FE000F88B11 /* AppDelegate.swift in Sources */,
+				B20B7B851EA2EFC100BC5ABA /* RacExtensions.swift in Sources */,
 				C7CB87171C51AC7000ED9AE6 /* SearchViewModel.swift in Sources */,
 				C7CB87161C51AC7000ED9AE6 /* SearchCellItem.swift in Sources */,
 				C7CB87121C51AB8E00ED9AE6 /* GenericTableCell.swift in Sources */,
@@ -463,7 +466,6 @@
 				C741B5A81C5EA01900C69372 /* PuzzlePiece.swift in Sources */,
 				C7F740591C4B2A2F00519895 /* UserDefaults.swift in Sources */,
 				C741B5A31C5E940400C69372 /* PuzzleViewController.swift in Sources */,
-				C7F740561C4B272500519895 /* RacExtensions.swift in Sources */,
 				C7852C331C4ACAAA00375089 /* StoryboardViewController.swift in Sources */,
 				C7E353681C680DC200A6C9DE /* PuzzleBoardDataSource.swift in Sources */,
 				C741B5B81C5EC65600C69372 /* PuzzlePieceViewModel.swift in Sources */,
@@ -530,8 +532,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -575,8 +579,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -595,6 +601,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -604,12 +611,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Carthage/Build/iOS/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = RACNest/Support/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = rp.RACNest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -617,12 +628,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Carthage/Build/iOS/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SRCROOT)/Carthage/Build/iOS/",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = RACNest/Support/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = rp.RACNest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -634,6 +649,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = rp.RACNestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RACNest.app/RACNest";
 			};
 			name = Debug;
@@ -646,6 +662,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = rp.RACNestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RACNest.app/RACNest";
 			};
 			name = Release;
